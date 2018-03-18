@@ -1,0 +1,110 @@
+<ion-header>
+    <ion-navbar>
+        <button
+            ion-button
+            menuToggle
+        >
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>My active visit</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <img
+        src="assets/imgs/logo.png"
+        class="dmit-logo"
+    >
+    <ion-list>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Visit date</span>
+                <span>
+                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}
+                </span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Visit type</span>
+                <span>{{ visit.visitType }}</span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Trend</span>
+                <span>{{ visit.salesTrend }}</span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Visit goal</span>
+                <span>{{ visit.goalSet }}</span>
+            </ion-row>
+        </ion-item>
+    </ion-list>
+
+    <div padding>
+        <ng-container *ngFor="let dayResult of visit.dayResults; let i = index;">
+            <ion-row
+                justify-content-between
+                align-items-center
+                class="wrapper__past-results"
+            >
+                <div class="wrapper__day-label">
+                    <h3>Day {{ i + 1 }}</h3>
+                    <p>
+                        {{ dateTimeService.timestampToDisplayDate(dayResult.date) }}
+                    </p>
+                </div>
+                <ion-badge [color]="dayResultIsGreaterThanGoalSet(dayResult) ? 'primary' : 'secondary'">{{ dayResult.result }}</ion-badge>
+            </ion-row>
+            <ion-input
+                *ngIf="!isFutureDate(dayResult)"
+                type="text"
+                [(ngModel)]="dayResult.result"
+                placeholder="Enter today's result"
+            ></ion-input>
+        </ng-container>
+
+        <ion-row
+            justify-content-start
+            align-items-center
+            class="wrapper__notes"
+        >
+            <ion-icon name="list-box"></ion-icon>
+            <h4>Notes</h4>
+        </ion-row>
+        <ion-textarea
+            [(ngModel)]="visit.note"
+            placeholder="Enter notes here..."
+        >
+            {{ visit.note }}
+        </ion-textarea>
+        <ion-row
+            justify-content-center
+            align-items-center
+        >
+            <button
+                ion-button
+                round
+                large
+                (click)="submit()"
+            >
+                Update
+            </button>
+        </ion-row>
+    </div>
+</ion-content>

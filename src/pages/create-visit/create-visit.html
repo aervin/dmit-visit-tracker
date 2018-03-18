@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-navbar>
+        <button
+            ion-button
+            menuToggle
+        >
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>New visit</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-datetime
+                displayFormat="MM/DD/YYYY"
+                pickerFormat="MM/DD/YYYY"
+                placeholder="Visit date"
+                [(ngModel)]="newVisit.visitDate"
+            ></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Visit type</ion-label>
+            <ion-select [(ngModel)]="newVisit.visitType">
+                <ion-option
+                    *ngFor="let type of fb.readVisitTypes()"
+                    [value]="type.displayText"
+                >
+                    {{ type.displayText }}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-input
+                type="number"
+                placeholder="6 week trend"
+                [(ngModel)]="newVisit.salesTrend"
+            ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input
+                type="number"
+                placeholder="Goal set"
+                [(ngModel)]="newVisit.goalSet"
+            ></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-row justify-content-center>
+        <button
+            ion-button
+            round
+            large
+            (click)="createVisit()"
+        >
+            <ion-icon name="new"></ion-icon>
+            Create visit
+        </button>
+    </ion-row>
+</ion-content>

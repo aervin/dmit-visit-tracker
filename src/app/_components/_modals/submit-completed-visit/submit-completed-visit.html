@@ -1,0 +1,23 @@
+<h3 class="text-center uppercase">Are you ready to complete your visit?</h3>
+<ion-row justify-content-center>
+    <button
+        ion-button
+        large
+        round
+        (click)="viewCtrl.dismiss(true)"
+    >
+        Save and submit
+    </button>
+</ion-row>
+<ion-row justify-content-center>
+    <button
+        ion-button
+        large
+        color="secondary"
+        round
+        outline
+        (click)="viewCtrl.dismiss(false)"
+    >
+        Dismiss
+    </button>
+</ion-row>

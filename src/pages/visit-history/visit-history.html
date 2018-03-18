@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-navbar>
+        <button
+            ion-button
+            menuToggle
+        >
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>My visit history</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <img
+        src="assets/imgs/logo.png"
+        class="dmit-logo"
+    >
+    <ion-list *ngFor="let visit of visitHistory">
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Visit date</span>
+                <span>
+                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}
+                </span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Visit type</span>
+                <span>{{ visit.visitType }}</span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Trend</span>
+                <span>{{ visit.salesTrend }}</span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Visit goal</span>
+                <span>{{ visit.goalSet }}</span>
+            </ion-row>
+        </ion-item>
+    </ion-list>
+</ion-content>
