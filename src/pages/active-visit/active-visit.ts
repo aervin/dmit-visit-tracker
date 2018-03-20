@@ -7,6 +7,7 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 import { SuccessComponent } from '../../app/_components/_modals/success/success';
 import { SubmitCompletedVisitComponent } from '../../app/_components/_modals/submit-completed-visit/submit-completed-visit';
 import { VisitHistoryPage } from '..';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 @IonicPage()
 @Component({
@@ -21,19 +22,19 @@ export class ActiveVisitPage {
         public navParams: NavParams,
         public fb: FirebaseService,
         public dateTimeService: DateTimeService,
-        public modalCtrl: ModalController
+        public modalCtrl: ModalController,
+        private loadingCtrl: LoadingController
     ) {
         this.visit = this.fb.readActiveVisit();
-        LogService.log(ActiveVisitPage.name, this.fb.readActiveVisit());
     }
 
-    public dayResultIsGreaterThanGoalSet(dayResult: {
+    public dayResultIsGreaterThanOrEqualToGoalSet(dayResult: {
         date: string;
         result: string;
     }): boolean {
         const result = parseFloat(dayResult.result);
         const goal = parseFloat(this.visit.goalSet);
-        return result > goal;
+        return result >= goal;
     }
 
     public isFutureDate(dayResult: { date: string; result: number | null }): boolean {
@@ -46,36 +47,37 @@ export class ActiveVisitPage {
         );
     }
 
-    public isTodaysResult(dayResult: { date: string; result: number | null }): boolean {
-        const today = new Date();
-        const resultDate = new Date(dayResult.date);
-        return (
-            today.getDate() === resultDate.getDate() &&
-            today.getMonth() === resultDate.getMonth() &&
-            today.getFullYear() === resultDate.getFullYear()
-        );
-    }
-
     public submit(): void {
+        const loader = this.loadingCtrl.create({ content: 'Updating...' });
         if (this.visit.dayResults.every(dayResult => dayResult.result !== null)) {
             const submitVisitModal = this.modalCtrl.create(SubmitCompletedVisitComponent);
             submitVisitModal.present();
             submitVisitModal.onDidDismiss(doIt => {
                 if (doIt) {
+                    loader.present();
                     this.visit.status = 'complete';
-                    this.fb.updateActiveVisit(this.visit).subscribe(success => {
-                        const successModal = this.modalCtrl.create(SuccessComponent);
-                        successModal.present();
-                        this.navCtrl.popToRoot();
-                        this.navCtrl.setRoot(VisitHistoryPage);
-                    });
+                    this.fb.updateActiveVisit(this.visit).subscribe(
+                        success => {
+                            const successModal = this.modalCtrl.create(SuccessComponent);
+                            successModal.present();
+                            this.navCtrl.popToRoot();
+                            this.navCtrl.setRoot(VisitHistoryPage);
+                        },
+                        error => {},
+                        () => loader.dismiss()
+                    );
                 }
             });
             return;
         }
-        this.fb.updateActiveVisit(this.visit).subscribe(success => {
-            const successModal = this.modalCtrl.create(SuccessComponent);
-            successModal.present();
-        });
+        loader.present();
+        this.fb.updateActiveVisit(this.visit).subscribe(
+            success => {
+                loader.dismiss();
+                const successModal = this.modalCtrl.create(SuccessComponent);
+                successModal.present();
+            },
+            error => {}
+        );
     }
 }

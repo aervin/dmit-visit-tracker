@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseService, Visit } from '../../app/_services/firebase.service';
-import { LogService } from '../../app/_services/log.service';
 import { DateTimeService } from '../../app/_services/date-time.service';
 
 @IonicPage()

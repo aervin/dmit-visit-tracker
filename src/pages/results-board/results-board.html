@@ -10,4 +10,27 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding></ion-content>
+<ion-content padding>
+    <ion-card padding>
+        <ion-row
+            justify-content-between
+            align-items-center
+        >
+            <p>
+                <ion-icon name="time"></ion-icon>
+                Last updated
+            </p>
+            <p>{{ fb.readResultsBoardLastUpdated() }}</p>
+        </ion-row>
+    </ion-card>
+    <ion-row
+        *ngFor="let dmit of results; let i = index;"
+        justify-content-between
+        align-items-center
+    >
+        <p>{{ dmit.user }}</p>
+        <h5>
+            {{ formatScoreAsPercentage(dmit.score) }}%
+        </h5>
+    </ion-row>
+</ion-content>

@@ -12,10 +12,8 @@ export interface FirebaseUser {
 
 export interface User {
     id: string;
-    firstName: string;
-    lastName: string;
+    bestScore: number;
     email: string;
-    phone: string;
 }
 
 export type VisitStatus = 'active' | 'complete';
@@ -50,6 +48,7 @@ export class FirebaseService {
     private _activeVisit: Visit | undefined;
     private _visitHistory: Visit[] | undefined;
     private _visitTypes: { displayText: string }[] = [];
+    private _resultsBoardLastUpdated: string = new Date().toLocaleTimeString();
 
     constructor() {
         try {
@@ -79,11 +78,9 @@ export class FirebaseService {
             .signInWithEmailAndPassword(email, password)
             .then(
                 success => {
-                    LogService.log(FirebaseService.name, success);
                     userSubject.next(true);
                 },
                 error => {
-                    LogService.log(FirebaseService.name, error);
                     userSubject.next(false);
                 }
             );
@@ -98,6 +95,18 @@ export class FirebaseService {
             .then(
                 success => {
                     successSubject.next(true);
+                    firebase
+                        .firestore()
+                        .doc(`users/${email}`)
+                        .set({
+                            email,
+                            bestScore: 0
+                        });
+                    this._user = {
+                        id: email,
+                        email,
+                        bestScore: 0
+                    };
                 },
                 error => {
                     successSubject.next(false);
@@ -140,6 +149,27 @@ export class FirebaseService {
         return visitsSubject;
     }
 
+    public getResultsBoard(): Observable<{ user: string; score: number }[]> {
+        const resultBoardSubject: Subject<
+            { user: string; score: number }[]
+        > = new Subject();
+        firebase
+            .firestore()
+            .collection('users')
+            .orderBy('bestScore', 'desc')
+            .onSnapshot(usersSnapshot => {
+                this._resultsBoardLastUpdated = new Date().toLocaleTimeString();
+                const resultsBoard = usersSnapshot.docs.map(userDoc => {
+                    return {
+                        user: userDoc.id,
+                        score: userDoc.data().bestScore
+                    };
+                });
+                resultBoardSubject.next(resultsBoard);
+            });
+        return resultBoardSubject;
+    }
+
     public getUserProfile(email: string): Observable<User> {
         const userSubject: Subject<User> = new Subject();
         firebase
@@ -169,7 +199,6 @@ export class FirebaseService {
                     this._visitHistory.push(visit.data() as Visit);
                 }
             });
-            LogService.log(FirebaseService.name, this._visitHistory);
         });
         visits.onSnapshot(visits => {
             this._visitHistory = [];
@@ -183,6 +212,10 @@ export class FirebaseService {
 
     public readActiveVisit(): Visit | undefined {
         return this._activeVisit;
+    }
+
+    public readResultsBoardLastUpdated(): string {
+        return this._resultsBoardLastUpdated;
     }
 
     public readUserProfile(): User {

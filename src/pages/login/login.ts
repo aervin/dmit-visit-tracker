@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CreateVisitPage } from '../create-visit/create-visit';
 import { FirebaseService } from '../../app/_services/firebase.service';
-import { LogService } from '../../app/_services/log.service';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 import { ActiveVisitPage } from '../index';
 import { SignUpPage } from '../sign-up/sign-up';

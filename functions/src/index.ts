@@ -5,6 +5,9 @@ admin.initializeApp(functions.config().firebase);
 export const aggregateResultBoard = functions.firestore
     .document('visits/{visitId}')
     .onWrite(doc => {
+        if (doc.data.data() === doc.data.previous.data()) {
+            return false;
+        }
         const userId = doc.data.data().userId;
         return admin
             .firestore()
@@ -19,7 +22,7 @@ export const aggregateResultBoard = functions.firestore
                     let successes = 0;
                     visitResults.forEach(dayResult => {
                         const result = parseFloat(dayResult.result);
-                        successes = result > visitGoal ? successes + 1 : successes;
+                        successes = result >= visitGoal ? successes + 1 : successes;
                     });
                     mostVisitSuccesses =
                         successes > mostVisitSuccesses ? successes : mostVisitSuccesses;
