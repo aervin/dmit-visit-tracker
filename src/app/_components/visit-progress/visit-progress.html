@@ -1,8 +1,38 @@
-<h4 class="text-center uppercase">Record each day's result below</h4>
-
 <ion-row
-    justify-content-center
     align-items-center
+    class="visit-progress"
 >
-    <ng-container *ngFor="let progressBar of progressBars"></ng-container>
+    <div
+        style="width: 20%;"
+        *ngFor="let progressBar of progressBars | slice:0:5; let i = index;"
+    >
+        <h3 class="text-center">{{ 'DAY ' + (i + 1) }}</h3>
+        <p
+            class="text-center result"
+            [class.first]="i === 0"
+            [class.last]="i === 4"
+            [class.success]="didMeetGoal(progressBar.result)"
+        >
+            {{ !!progressBar.result ? progressBar.result + '%' : '' }}
+        </p>
+    </div>
+</ion-row>
+<ion-row
+    align-items-center
+    class="visit-progress"
+>
+    <div
+        style="width: 20%;"
+        *ngFor="let progressBar of progressBars | slice:5:10; let i = index;"
+    >
+        <h3 class="text-center">{{ 'DAY ' + (i + 6) }}</h3>
+        <p
+            class="text-center result"
+            [class.first]="i === 0"
+            [class.last]="i === 4"
+            [class.success]="didMeetGoal(progressBar.result)"
+        >
+            {{ !!progressBar.result ? progressBar.result + '%' : '' }}
+        </p>
+    </div>
 </ion-row>

@@ -25724,6 +25724,10 @@ ion-input {
   text-transform: uppercase !important;
 }
 
+.toolbar-title, ion-label {
+  text-transform: uppercase;
+}
+
 active-visit-does-not-exist {
   background: black !important;
   padding-top: 112px;
@@ -25801,4 +25805,8 @@ h4 {
 
 p {
   margin-right: 12px !important;
+}
+
+ion-icon[name='time'] {
+  margin-right: 8px;
 }

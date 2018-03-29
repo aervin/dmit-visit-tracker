@@ -25,6 +25,7 @@ import { CreateVisitInvalidComponent } from './_components/_modals/create-visit-
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { SuccessSignupComponent } from './_components/_modals/success-signup/success-signup';
 import { EncounteredProblemComponent } from './_components/_modals/encountered-problem/encountered-problem';
+import { CloseVisitComponent } from './_components/_modals/close-visit/close-visit';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { EncounteredProblemComponent } from './_components/_modals/encountered-p
         ActiveVisitDoesNotExistComponent,
         ActiveVisitExistsModalComponent,
         ActiveVisitPage,
+        CloseVisitComponent,
         CreateVisitInvalidComponent,
         CreateVisitPage,
         EncounteredProblemComponent,
@@ -51,6 +53,7 @@ import { EncounteredProblemComponent } from './_components/_modals/encountered-p
         ActiveVisitDoesNotExistComponent,
         ActiveVisitExistsModalComponent,
         ActiveVisitPage,
+        CloseVisitComponent,
         CreateVisitInvalidComponent,
         CreateVisitPage,
         EncounteredProblemComponent,

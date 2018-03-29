@@ -52,10 +52,18 @@ ion-input {
     width: 212px;
 }
 
+.hide {
+    opacity: 0 !important;
+}
+
 .text-center {
     text-align: center !important;
 }
 
 .uppercase {
     text-transform: uppercase !important;
+}
+
+.toolbar-title, ion-label {
+    text-transform: uppercase;
 }

@@ -5,6 +5,10 @@ ion-badge {
 ion-icon {
     font-size: 24px;
     margin-right: 8px;
+
+    &[name="cloud-done"] {
+        font-size: 28px;
+    }
 }
 
 ion-textarea {
@@ -24,6 +28,12 @@ h3 {
 
 h4 {
     margin: 0 !important;
+}
+
+.wrapper__day-badge {
+    align-items: center;
+    display: flex;
+    justify-content: start;
 }
 
 .wrapper__day-result {

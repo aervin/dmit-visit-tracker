@@ -35,7 +35,8 @@ export class CreateVisitPage {
         if (
             this.newVisit.goalSet === null ||
             this.newVisit.salesTrend === null ||
-            this.newVisit.visitType === null
+            this.newVisit.visitType === null ||
+            this.goalIsInvalid()
         ) {
             const invalidModal = this.modalCtrl.create(CreateVisitInvalidComponent);
             invalidModal.present();
@@ -57,5 +58,13 @@ export class CreateVisitPage {
                 });
             });
         });
+    }
+
+    public goalIsInvalid(): boolean {
+        try {
+            return parseFloat(this.newVisit.goalSet) <= parseFloat(this.newVisit.salesTrend);
+        } catch {
+            return true;
+        }
     }
 }

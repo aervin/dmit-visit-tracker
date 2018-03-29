@@ -1,0 +1,34 @@
+ion-row.visit-progress {
+    padding: 8px 16px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+hr {
+    background: rgba(255, 255, 255, 0.5) !important;
+    margin: 0 0 48px;
+}
+
+p.result {
+    background: white;
+    border: 1px solid grey;
+    box-sizing: content-box;
+    color: black;
+    line-height: 30px;
+    min-height: 30px;
+    margin: 6px 0 0 !important;
+    &.first {
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+    &.last {
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+    &.success {
+        background: #82c341;
+        color: white;
+    }
+}

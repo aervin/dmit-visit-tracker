@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -14,18 +15,22 @@ export interface User {
     id: string;
     bestScore: number;
     email: string;
+    firstName: string;
+    lastName: string;
 }
 
-export type VisitStatus = 'active' | 'complete';
+export interface DayResult {
+    date: string;
+    result: string | null;
+}
+
+export type VisitStatus = 'active' | 'closed' | 'complete';
 
 export interface Visit {
     id?: string;
-    dayResults: {
-        date: string;
-        result: number;
-    }[];
+    dayResults: DayResult[];
     goalSet: string;
-    salesTrend: number;
+    salesTrend: string;
     status: VisitStatus;
     userId: string;
     visitDate: string;
@@ -87,7 +92,11 @@ export class FirebaseService {
         return userSubject;
     }
 
-    public createUser(email: string, password: string): Observable<boolean> {
+    public createUser(
+        email: string,
+        password: string,
+        username: { firstName: string; lastName: string }
+    ): Observable<boolean> {
         const successSubject: Subject<boolean> = new Subject();
         firebase
             .auth()
@@ -100,11 +109,15 @@ export class FirebaseService {
                         .doc(`users/${email}`)
                         .set({
                             email,
-                            bestScore: 0
+                            bestScore: 0,
+                            firstName: username.firstName,
+                            lastName: username.lastName
                         });
                     this._user = {
                         id: email,
                         email,
+                        firstName: username.firstName,
+                        lastName: username.lastName,
                         bestScore: 0
                     };
                 },
@@ -128,23 +141,23 @@ export class FirebaseService {
     }
 
     public getActiveVisit(userId: string): Observable<Visit | undefined> {
-        const visitsSubject: Subject<Visit> = new Subject();
+        const visitsSubject: BehaviorSubject<
+            Visit | null | undefined
+        > = new BehaviorSubject(!!this._activeVisit ? this._activeVisit : null);
         firebase
             .firestore()
             .collection('visits')
             .where('userId', '==', userId)
-            .get()
-            .then(visitsSnapshot => {
-                const activeVisit = visitsSnapshot.docs.find(
+            .onSnapshot(visitsSnapshot => {
+                const visitDoc = visitsSnapshot.docs.find(
                     doc => doc.data().status === 'active'
                 );
-                this._activeVisit =
-                    activeVisit !== undefined
-                        ? ({ ...activeVisit.data(), id: activeVisit.id } as Visit)
-                        : undefined;
-                visitsSubject.next(
-                    activeVisit !== undefined ? (activeVisit.data() as Visit) : undefined
-                );
+                const _activeVisit = !!visitDoc
+                    ? { id: visitDoc.id, ...visitDoc.data() }
+                    : undefined;
+
+                visitsSubject.next(_activeVisit as Visit);
+                this._activeVisit = _activeVisit as Visit;
             });
         return visitsSubject;
     }
@@ -161,7 +174,7 @@ export class FirebaseService {
                 this._resultsBoardLastUpdated = new Date().toLocaleTimeString();
                 const resultsBoard = usersSnapshot.docs.map(userDoc => {
                     return {
-                        user: userDoc.id,
+                        user: userDoc.data().firstName + ' ' + userDoc.data().lastName,
                         score: userDoc.data().bestScore
                     };
                 });
@@ -188,26 +201,22 @@ export class FirebaseService {
     }
 
     public initVisitsListener(): void {
-        const visits = firebase
+        firebase
             .firestore()
             .collection('visits')
-            .where('userId', '==', this._user.id);
-        visits.get().then(visits => {
-            this._visitHistory = [];
-            visits.docs.forEach(visit => {
-                if (visit.data().status === 'complete') {
-                    this._visitHistory.push(visit.data() as Visit);
-                }
+            .where('userId', '==', this._user.id)
+            .orderBy('visitDate', 'desc')
+            .onSnapshot(visits => {
+                this._visitHistory = [];
+                visits.docs.forEach(doc => {
+                    if (
+                        doc.data().status === 'complete' ||
+                        doc.data().status === 'closed'
+                    ) {
+                        this._visitHistory.push(doc.data() as Visit);
+                    }
+                });
             });
-        });
-        visits.onSnapshot(visits => {
-            this._visitHistory = [];
-            visits.docs.forEach(doc => {
-                if (doc.data().status === 'complete') {
-                    this._visitHistory.push(doc.data() as Visit);
-                }
-            });
-        });
     }
 
     public readActiveVisit(): Visit | undefined {
@@ -238,7 +247,10 @@ export class FirebaseService {
             .doc(visit.id)
             .set(visit)
             .then(() => {
-                this._activeVisit = visit.status === 'complete' ? undefined : visit;
+                this._activeVisit =
+                    visit.status === 'complete' || visit.status === 'closed'
+                        ? undefined
+                        : visit;
                 successSubject.next(true);
             })
             .catch(error => successSubject.next(false));

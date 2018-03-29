@@ -27,10 +27,11 @@
         *ngFor="let dmit of results; let i = index;"
         justify-content-between
         align-items-center
+        padding
     >
         <p>{{ dmit.user }}</p>
         <h5>
-            {{ formatScoreAsPercentage(dmit.score) }}%
+            {{ dmit.score + '/10' }}
         </h5>
     </ion-row>
 </ion-content>

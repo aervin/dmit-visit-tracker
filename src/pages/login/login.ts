@@ -38,6 +38,9 @@ export class LoginPage {
                         this.fb
                             .getActiveVisit(this.fb.readUserProfile().id)
                             .subscribe(visit => {
+                                if (visit === null) {
+                                    return;
+                                }
                                 loader.dismiss();
                                 this.navCtrl.setRoot(
                                     visit === undefined
@@ -54,8 +57,7 @@ export class LoginPage {
                     problemModal.present();
                 }
             },
-            error => {},
-            () => loader.dismiss()
+            error => {}
         );
     }
 

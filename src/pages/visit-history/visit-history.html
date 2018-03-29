@@ -15,7 +15,7 @@
         src="assets/imgs/logo.png"
         class="dmit-logo"
     >
-    <ion-list *ngFor="let visit of visitHistory">
+    <ion-list *ngFor="let visit of visitHistory; let i = index;">
         <ion-item>
             <ion-row
                 justify-content-between
@@ -54,5 +54,21 @@
                 <span>{{ visit.goalSet }}</span>
             </ion-row>
         </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Days made</span>
+                <span>{{ getSuccessScore(visit) }}</span>
+            </ion-row>
+        </ion-item>
+        <visit-progress
+            padding
+            [goalSet]="visit.goalSet"
+            [progressBars]="visit.dayResults"
+        ></visit-progress>
+
+        <hr *ngIf="i + 1 !== visitHistory.length">
     </ion-list>
 </ion-content>

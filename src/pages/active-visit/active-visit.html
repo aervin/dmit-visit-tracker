@@ -10,7 +10,10 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content
+    padding
+    *ngIf="!!visit"
+>
     <img
         src="assets/imgs/logo.png"
         class="dmit-logo"
@@ -54,12 +57,26 @@
                 <span>{{ visit.goalSet }}%</span>
             </ion-row>
         </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
+                <span>Days made</span>
+                <span>{{ getSuccessScore() }}</span>
+            </ion-row>
+        </ion-item>
+        <visit-progress
+            padding
+            [goalSet]="visit.goalSet"
+            [progressBars]="visitOriginal.dayResults"
+        ></visit-progress>
     </ion-list>
 
     <div padding>
         <div
             class="wrapper__day-result"
-            *ngFor="let dayResult of visit.dayResults; let i = index;"
+            *ngFor="let dayResult of visit?.dayResults; let i = index;"
         >
             <ion-row
                 justify-content-between
@@ -73,16 +90,23 @@
                         {{ dateTimeService.timestampToDisplayDate(dayResult.date) }}
                     </p>
                 </div>
-                <ion-badge
-                    *ngIf="!!dayResult.result"
-                    [color]="dayResultIsGreaterThanOrEqualToGoalSet(dayResult) ? 'primary' : 'danger'"
-                >
-                    {{ dayResult.result }}%
-                </ion-badge>
+                <div class="wrapper__day-badge">
+                    <ion-icon
+                        name="cloud-done"
+                        *ngIf="!isFutureDate(dayResult) && savedResultIsEqual(dayResult.result, i)"
+                    ></ion-icon>
+                    <ion-badge
+                        *ngIf="!!dayResult.result"
+                        [color]="dayResultIsGreaterThanOrEqualToGoalSet(dayResult) ? 'primary' : 'danger'"
+                    >
+                        {{ dayResult.result }}%
+                    </ion-badge>
+                </div>
+
             </ion-row>
             <ion-input
                 *ngIf="!isFutureDate(dayResult)"
-                type="text"
+                type="number"
                 [(ngModel)]="dayResult.result"
                 placeholder="Enter today's result"
             ></ion-input>
@@ -97,6 +121,7 @@
             <h4>Notes</h4>
         </ion-row>
         <ion-textarea
+            *ngIf="!!visit"
             [(ngModel)]="visit.note"
             placeholder="Enter notes here..."
         >
@@ -105,6 +130,8 @@
         <ion-row
             justify-content-center
             align-items-center
+            padding
+            full
         >
             <button
                 ion-button
@@ -113,6 +140,21 @@
                 (click)="submit()"
             >
                 Update
+            </button>
+        </ion-row>
+        <ion-row
+            justify-content-center
+            align-items-center
+            padding
+        >
+            <button
+                ion-button
+                round
+                large
+                color="danger"
+                (click)="closeVisit()"
+            >
+                Close this visit
             </button>
         </ion-row>
     </div>

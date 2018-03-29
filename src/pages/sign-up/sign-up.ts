@@ -20,7 +20,9 @@ import { EncounteredProblemComponent } from '../../app/_components/_modals/encou
 export class SignUpPage {
     public email: string;
     public password: string;
-    public passwordConfirmation;
+    public passwordConfirmation: string;
+    public firstName: string;
+    public lastName: string;
 
     constructor(
         public navCtrl: NavController,
@@ -35,7 +37,9 @@ export class SignUpPage {
             !!this.email &&
             !!this.password &&
             !!this.passwordConfirmation &&
-            this.password === this.passwordConfirmation
+            this.password === this.passwordConfirmation &&
+            !!this.firstName &&
+            !!this.lastName
         );
     }
 
@@ -49,16 +53,23 @@ export class SignUpPage {
             content: 'Creating your profile...'
         });
         loader.present();
-        this.fb.createUser(this.email, this.password).subscribe(success => {
-            loader.dismiss();
-            if (success) {
-                const successModal = this.modalCtrl.create(SuccessSignupComponent);
-                successModal.present();
-                successModal.onDidDismiss(() => this.navCtrl.setRoot(CreateVisitPage));
-                return;
-            }
-            const problemModal = this.modalCtrl.create(EncounteredProblemComponent);
-            problemModal.present();
-        });
+        this.fb
+            .createUser(this.email, this.password, {
+                firstName: this.firstName,
+                lastName: this.lastName
+            })
+            .subscribe(success => {
+                loader.dismiss();
+                if (success) {
+                    const successModal = this.modalCtrl.create(SuccessSignupComponent);
+                    successModal.present();
+                    successModal.onDidDismiss(() =>
+                        this.navCtrl.setRoot(CreateVisitPage)
+                    );
+                    return;
+                }
+                const problemModal = this.modalCtrl.create(EncounteredProblemComponent);
+                problemModal.present();
+            });
     }
 }

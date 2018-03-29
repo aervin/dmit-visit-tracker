@@ -1,0 +1,28 @@
+<h3 class="text-center uppercase">
+    Are you sure you want to close this visit?
+</h3>
+<ion-row
+    justify-content-center
+    padding
+>
+    <button
+        ion-button
+        large
+        round
+        (click)="viewCtrl.dismiss(true)"
+    >
+        Yes, do it!
+    </button>
+</ion-row>
+<ion-row justify-content-center>
+    <button
+        ion-button
+        large
+        color="secondary"
+        round
+        outline
+        (click)="viewCtrl.dismiss(false)"
+    >
+        Second thought...
+    </button>
+</ion-row>

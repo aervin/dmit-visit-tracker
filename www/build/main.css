@@ -25716,6 +25716,10 @@ ion-input {
   width: 212px;
 }
 
+.hide {
+  opacity: 0 !important;
+}
+
 .text-center {
   text-align: center !important;
 }
@@ -25724,12 +25728,21 @@ ion-input {
   text-transform: uppercase !important;
 }
 
+.toolbar-title, ion-label {
+  text-transform: uppercase;
+}
+
 active-visit-does-not-exist {
   background: black !important;
   padding-top: 112px;
 }
 
 active-visit-exists {
+  background: black !important;
+  padding-top: 112px;
+}
+
+close-visit {
   background: black !important;
   padding-top: 112px;
 }
@@ -25759,6 +25772,45 @@ success-signup {
   padding-top: 112px;
 }
 
+ion-row.visit-progress {
+  padding: 8px 16px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+hr {
+  background: rgba(255, 255, 255, 0.5) !important;
+  margin: 0 0 48px;
+}
+
+p.result {
+  background: white;
+  border: 1px solid grey;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  color: black;
+  line-height: 30px;
+  min-height: 30px;
+  margin: 6px 0 0 !important;
+}
+
+p.result.first {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+p.result.last {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+p.result.success {
+  background: #82c341;
+  color: white;
+}
+
 ion-badge {
   padding: 8px 16px !important;
 }
@@ -25766,6 +25818,10 @@ ion-badge {
 ion-icon {
   font-size: 24px;
   margin-right: 8px;
+}
+
+ion-icon[name="cloud-done"] {
+  font-size: 28px;
 }
 
 ion-textarea {
@@ -25785,6 +25841,21 @@ h3 {
 
 h4 {
   margin: 0 !important;
+}
+
+.wrapper__day-badge {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: start;
+  -ms-flex-pack: start;
+  justify-content: start;
 }
 
 .wrapper__day-result {

@@ -18,4 +18,16 @@ export class VisitHistoryPage {
     ) {
         this.visitHistory = this.fb.readVisitHistory();
     }
+
+    public getSuccessScore(visit: Visit): string | null {
+        try {
+            return visit.dayResults
+                .filter(
+                    result => parseFloat(result.result) >= parseFloat(visit.goalSet)
+                )
+                .length.toString();
+        } catch {
+            return null;
+        }
+    }
 }
