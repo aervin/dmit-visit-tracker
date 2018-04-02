@@ -7,6 +7,7 @@ import { ActiveVisitPage } from '../index';
 import { SignUpPage } from '../sign-up/sign-up';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { EncounteredProblemComponent } from '../../app/_components/_modals/encountered-problem/encountered-problem';
+import { LogService } from '../../app/_services/log.service';
 
 @IonicPage()
 @Component({
@@ -60,7 +61,7 @@ export class LoginPage {
             error => {}
         );
     }
-
+    
     public signUp(event: Event): void {
         this.navCtrl.push(SignUpPage);
     }

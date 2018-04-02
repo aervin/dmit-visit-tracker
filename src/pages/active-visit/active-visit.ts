@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FirebaseService, Visit } from '../../app/_services/firebase.service';
 import { DateTimeService } from '../../app/_services/date-time.service';
 import { LogService } from '../../app/_services/log.service';
@@ -27,7 +27,8 @@ export class ActiveVisitPage {
         public fb: FirebaseService,
         public dateTimeService: DateTimeService,
         public modalCtrl: ModalController,
-        private loadingCtrl: LoadingController
+        private loadingCtrl: LoadingController,
+        private toastCtrl: ToastController
     ) {}
 
     public ngOnInit(): void {
@@ -127,10 +128,20 @@ export class ActiveVisitPage {
         this.fb.updateActiveVisit(this.visit).subscribe(
             success => {
                 loader.dismiss();
-                const successModal = this.modalCtrl.create(SuccessComponent);
-                successModal.present();
+                const toast = this.toastCtrl.create({
+                    message: 'Your visit was updated successfully!',
+                    duration: 2000,
+                    position: 'top'
+                });
+                toast.present();
             },
             error => {}
         );
+    }
+
+    public standardizeInput(event: KeyboardEvent): void {
+        (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value
+            .replace(/[^0-9.-]/g, '')
+            .replace(/(\..*)\./g, '$1');
     }
 }

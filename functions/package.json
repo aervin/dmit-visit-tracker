@@ -11,8 +11,11 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "cors": "^2.8.4",
     "firebase-admin": "~5.8.1",
-    "firebase-functions": "^0.8.1"
+    "firebase-functions": "^0.8.1",
+    "nodemailer": "^4.6.4",
+    "to-csv": "^0.1.1"
   },
   "devDependencies": {
     "tslint": "^5.8.0",

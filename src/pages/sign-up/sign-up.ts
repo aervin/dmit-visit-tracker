@@ -32,7 +32,7 @@ export class SignUpPage {
         private loadingCtrl: LoadingController
     ) {}
 
-    isValid(): boolean {
+    isFormValid(): boolean {
         return (
             !!this.email &&
             !!this.password &&
@@ -42,9 +42,8 @@ export class SignUpPage {
             !!this.lastName
         );
     }
-
     public submit(): void {
-        if (!this.isValid()) {
+        if (!this.isFormValid()) {
             const invalidModal = this.modalCtrl.create(CreateVisitInvalidComponent);
             invalidModal.present();
             return;

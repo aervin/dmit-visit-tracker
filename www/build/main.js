@@ -1,241 +1,6 @@
 webpackJsonp([6],{
 
-/***/ 119:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EncounteredProblemComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var EncounteredProblemComponent = /** @class */ (function () {
-    function EncounteredProblemComponent(viewCtrl) {
-        this.viewCtrl = viewCtrl;
-    }
-    EncounteredProblemComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'encountered-problem',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/'<h3 class="text-center uppercase">The was a problem</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        color="secondary"\n        (click)="viewCtrl.dismiss()"\n    >\n        I understand\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]])
-    ], EncounteredProblemComponent);
-    return EncounteredProblemComponent;
-}());
-
-//# sourceMappingURL=encountered-problem.js.map
-
-/***/ }),
-
-/***/ 127:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateVisitPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__empty_day_results__ = __webpack_require__(544);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_components_modals_create_visit_invalid_create_visit_invalid__ = __webpack_require__(186);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__ = __webpack_require__(185);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__index__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_loading_loading_controller__ = __webpack_require__(83);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-var CreateVisitPage = /** @class */ (function () {
-    function CreateVisitPage(navCtrl, navParams, fb, modalCtrl, loadingCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.fb = fb;
-        this.modalCtrl = modalCtrl;
-        this.loadingCtrl = loadingCtrl;
-        this.newVisit = {
-            dayResults: null,
-            userId: this.fb.readUserProfile().id,
-            goalSet: null,
-            note: '',
-            salesTrend: null,
-            visitDate: new Date().toISOString(),
-            status: 'active',
-            visitType: null
-        };
-    }
-    CreateVisitPage_1 = CreateVisitPage;
-    CreateVisitPage.prototype.createVisit = function () {
-        var _this = this;
-        if (this.newVisit.goalSet === null ||
-            this.newVisit.salesTrend === null ||
-            this.newVisit.visitType === null ||
-            this.goalIsInvalid()) {
-            var invalidModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__app_components_modals_create_visit_invalid_create_visit_invalid__["a" /* CreateVisitInvalidComponent */]);
-            invalidModal.present();
-            return;
-        }
-        var loader = this.loadingCtrl.create({
-            content: 'Creating your visit...'
-        });
-        this.newVisit.dayResults = Object(__WEBPACK_IMPORTED_MODULE_3__empty_day_results__["a" /* generateDayResults */])(this.newVisit.visitDate);
-        this.fb.createVisit(this.newVisit).subscribe(function (success) {
-            var successModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__["a" /* SuccessComponent */]);
-            successModal.present();
-            successModal.onDidDismiss(function () {
-                _this.fb.getActiveVisit(_this.fb.readUserProfile().id).subscribe(function (visit) {
-                    loader.dismiss();
-                    _this.navCtrl.setRoot(visit === undefined ? CreateVisitPage_1 : __WEBPACK_IMPORTED_MODULE_6__index__["a" /* ActiveVisitPage */]);
-                });
-            });
-        });
-    };
-    CreateVisitPage.prototype.goalIsInvalid = function () {
-        try {
-            return parseFloat(this.newVisit.goalSet) <= parseFloat(this.newVisit.salesTrend);
-        }
-        catch (_a) {
-            return true;
-        }
-    };
-    CreateVisitPage = CreateVisitPage_1 = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>New visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-datetime\n                displayFormat="MM/DD/YYYY"\n                pickerFormat="MM/DD/YYYY"\n                placeholder="Visit date"\n                [(ngModel)]="newVisit.visitDate"\n            ></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-label>Visit type</ion-label>\n            <ion-select [(ngModel)]="newVisit.visitType">\n                <ion-option\n                    *ngFor="let type of fb.readVisitTypes()"\n                    [value]="type.displayText"\n                >\n                    {{ type.displayText }}\n                </ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="number"\n                placeholder="6 week trend"\n                [(ngModel)]="newVisit.salesTrend"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="number"\n                placeholder="Goal set"\n                [(ngModel)]="newVisit.goalSet"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            large\n            (click)="createVisit()"\n        >\n            <ion-icon name="new"></ion-icon>\n            Create visit\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__["a" /* FirebaseService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */],
-            __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]])
-    ], CreateVisitPage);
-    return CreateVisitPage;
-    var CreateVisitPage_1;
-}());
-
-//# sourceMappingURL=create-visit.js.map
-
-/***/ }),
-
-/***/ 184:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DateTimeService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-var DateTimeService = /** @class */ (function () {
-    function DateTimeService() {
-    }
-    DateTimeService.prototype.timestampToDisplayDate = function (stamp) {
-        var d = new Date(stamp);
-        return d.toLocaleDateString();
-    };
-    DateTimeService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
-    ], DateTimeService);
-    return DateTimeService;
-}());
-
-//# sourceMappingURL=date-time.service.js.map
-
-/***/ }),
-
-/***/ 185:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuccessComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var SuccessComponent = /** @class */ (function () {
-    function SuccessComponent(viewCtrl) {
-        this.viewCtrl = viewCtrl;
-    }
-    SuccessComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'success',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/success/success.html"*/'<h3 class="text-center uppercase">Visit updated successfully!</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        outline\n        (click)="viewCtrl.dismiss()"\n    >\n        Awesome!\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/success/success.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__["a" /* ViewController */]])
-    ], SuccessComponent);
-    return SuccessComponent;
-}());
-
-//# sourceMappingURL=success.js.map
-
-/***/ }),
-
-/***/ 186:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateVisitInvalidComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var CreateVisitInvalidComponent = /** @class */ (function () {
-    function CreateVisitInvalidComponent(viewCtrl) {
-        this.viewCtrl = viewCtrl;
-    }
-    CreateVisitInvalidComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'create-visit-invalid',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/create-visit-invalid/create-visit-invalid.html"*/'<h3 class="text-center uppercase">You didn\'t fill out the form correctly</h3>\n<p class="text-center">\n    Wake up!\n</p>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        outline\n        (click)="viewCtrl.dismiss()"\n    >\n        My bad...\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/create-visit-invalid/create-visit-invalid.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__["a" /* ViewController */]])
-    ], CreateVisitInvalidComponent);
-    return CreateVisitInvalidComponent;
-}());
-
-//# sourceMappingURL=create-visit-invalid.js.map
-
-/***/ }),
-
-/***/ 209:
+/***/ 118:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -309,7 +74,250 @@ var LogService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 214:
+/***/ 120:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EncounteredProblemComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var EncounteredProblemComponent = /** @class */ (function () {
+    function EncounteredProblemComponent(viewCtrl) {
+        this.viewCtrl = viewCtrl;
+    }
+    EncounteredProblemComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'encountered-problem',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/'<h3 class="text-center uppercase">The was a problem</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        color="secondary"\n        (click)="viewCtrl.dismiss()"\n    >\n        I understand\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]])
+    ], EncounteredProblemComponent);
+    return EncounteredProblemComponent;
+}());
+
+//# sourceMappingURL=encountered-problem.js.map
+
+/***/ }),
+
+/***/ 128:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateVisitPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__empty_day_results__ = __webpack_require__(544);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_components_modals_create_visit_invalid_create_visit_invalid__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__index__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_loading_loading_controller__ = __webpack_require__(83);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var CreateVisitPage = /** @class */ (function () {
+    function CreateVisitPage(navCtrl, navParams, fb, modalCtrl, loadingCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.fb = fb;
+        this.modalCtrl = modalCtrl;
+        this.loadingCtrl = loadingCtrl;
+        this.newVisit = {
+            dayResults: null,
+            userId: this.fb.readUserProfile().id,
+            userName: '',
+            goalSet: null,
+            note: '',
+            salesTrend: null,
+            visitDate: new Date().toISOString(),
+            status: 'active',
+            visitType: null,
+            store: null
+        };
+    }
+    CreateVisitPage_1 = CreateVisitPage;
+    CreateVisitPage.prototype.createVisit = function () {
+        var _this = this;
+        if (this.newVisit.goalSet === null ||
+            this.newVisit.salesTrend === null ||
+            this.newVisit.visitType === null ||
+            this.newVisit.store === null ||
+            this.goalIsInvalid()) {
+            var invalidModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__app_components_modals_create_visit_invalid_create_visit_invalid__["a" /* CreateVisitInvalidComponent */]);
+            invalidModal.present();
+            return;
+        }
+        var loader = this.loadingCtrl.create({
+            content: 'Creating your visit...'
+        });
+        this.newVisit.dayResults = Object(__WEBPACK_IMPORTED_MODULE_3__empty_day_results__["a" /* generateDayResults */])(this.newVisit.visitDate);
+        this.fb.createVisit(this.newVisit).subscribe(function (success) {
+            var successModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__["a" /* SuccessComponent */]);
+            successModal.present();
+            successModal.onDidDismiss(function () {
+                _this.fb.getActiveVisit(_this.fb.readUserProfile().id).subscribe(function (visit) {
+                    loader.dismiss();
+                    _this.navCtrl.setRoot(visit === undefined ? CreateVisitPage_1 : __WEBPACK_IMPORTED_MODULE_6__index__["a" /* ActiveVisitPage */]);
+                });
+            });
+        });
+    };
+    CreateVisitPage.prototype.goalIsInvalid = function () {
+        try {
+            return (parseFloat(this.newVisit.goalSet) <= parseFloat(this.newVisit.salesTrend));
+        }
+        catch (_a) {
+            return true;
+        }
+    };
+    CreateVisitPage.prototype.standardizeInput = function (event) {
+        event.target.value = event.target.value
+            .replace(/[^0-9.-]/g, '')
+            .replace(/(\..*)\./g, '$1');
+    };
+    CreateVisitPage = CreateVisitPage_1 = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-create-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>New visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-datetime\n                displayFormat="MM/DD/YYYY"\n                pickerFormat="MM/DD/YYYY"\n                placeholder="Visit date"\n                [(ngModel)]="newVisit.visitDate"\n            ></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Store"\n                [(ngModel)]="newVisit.store"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label>Visit type</ion-label>\n            <ion-select [(ngModel)]="newVisit.visitType">\n                <ion-option\n                    *ngFor="let type of fb.readVisitTypes()"\n                    [value]="type.displayText"\n                >\n                    {{ type.displayText }}\n                </ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                (input)="standardizeInput($event)"\n                placeholder="6 week trend"\n                [(ngModel)]="newVisit.salesTrend"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                (input)="standardizeInput($event)"\n                placeholder="Goal set"\n                [(ngModel)]="newVisit.goalSet"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            large\n            (click)="createVisit()"\n        >\n            <ion-icon name="new"></ion-icon>\n            Create visit\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__["a" /* FirebaseService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]])
+    ], CreateVisitPage);
+    return CreateVisitPage;
+    var CreateVisitPage_1;
+}());
+
+//# sourceMappingURL=create-visit.js.map
+
+/***/ }),
+
+/***/ 186:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DateTimeService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var DateTimeService = /** @class */ (function () {
+    function DateTimeService() {
+    }
+    DateTimeService.prototype.timestampToDisplayDate = function (stamp) {
+        var d = new Date(stamp);
+        return d.toLocaleDateString();
+    };
+    DateTimeService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])()
+    ], DateTimeService);
+    return DateTimeService;
+}());
+
+//# sourceMappingURL=date-time.service.js.map
+
+/***/ }),
+
+/***/ 187:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SuccessComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SuccessComponent = /** @class */ (function () {
+    function SuccessComponent(viewCtrl) {
+        this.viewCtrl = viewCtrl;
+    }
+    SuccessComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'success',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/success/success.html"*/'<h3 class="text-center uppercase">Visit updated successfully!</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        outline\n        (click)="viewCtrl.dismiss()"\n    >\n        Awesome!\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/success/success.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__["a" /* ViewController */]])
+    ], SuccessComponent);
+    return SuccessComponent;
+}());
+
+//# sourceMappingURL=success.js.map
+
+/***/ }),
+
+/***/ 188:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateVisitInvalidComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var CreateVisitInvalidComponent = /** @class */ (function () {
+    function CreateVisitInvalidComponent(viewCtrl) {
+        this.viewCtrl = viewCtrl;
+    }
+    CreateVisitInvalidComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'create-visit-invalid',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/create-visit-invalid/create-visit-invalid.html"*/'<h3 class="text-center uppercase">You didn\'t fill out the form correctly</h3>\n<p class="text-center">\n    Wake up!\n</p>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        outline\n        (click)="viewCtrl.dismiss()"\n    >\n        My bad...\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/create-visit-invalid/create-visit-invalid.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular_navigation_view_controller__["a" /* ViewController */]])
+    ], CreateVisitInvalidComponent);
+    return CreateVisitInvalidComponent;
+}());
+
+//# sourceMappingURL=create-visit-invalid.js.map
+
+/***/ }),
+
+/***/ 215:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -317,16 +325,16 @@ var LogService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_services_date_time_service__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_modal_modal_controller__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_services_date_time_service__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_modal_modal_controller__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_components_modals_submit_completed_visit_submit_completed_visit__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7____ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular_components_loading_loading_controller__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_skip__ = __webpack_require__(545);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_skip___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_skip__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__app_components_modals_close_visit_close_visit__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_components_modals_encountered_problem_encountered_problem__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_components_modals_encountered_problem_encountered_problem__ = __webpack_require__(120);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -357,13 +365,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ActiveVisitPage = /** @class */ (function () {
-    function ActiveVisitPage(navCtrl, navParams, fb, dateTimeService, modalCtrl, loadingCtrl) {
+    function ActiveVisitPage(navCtrl, navParams, fb, dateTimeService, modalCtrl, loadingCtrl, toastCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.fb = fb;
         this.dateTimeService = dateTimeService;
         this.modalCtrl = modalCtrl;
         this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
     }
     ActiveVisitPage.prototype.ngOnInit = function () {
         var _this = this;
@@ -446,20 +455,25 @@ var ActiveVisitPage = /** @class */ (function () {
         loader.present();
         this.fb.updateActiveVisit(this.visit).subscribe(function (success) {
             loader.dismiss();
-            var successModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__app_components_modals_success_success__["a" /* SuccessComponent */]);
-            successModal.present();
+            var toast = _this.toastCtrl.create({
+                message: 'Your visit was updated successfully!',
+                duration: 2000,
+                position: 'top'
+            });
+            toast.present();
         }, function (error) { });
     };
     ActiveVisitPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-active-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>My active visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content\n    padding\n    *ngIf="!!visit"\n>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit date</span>\n                <span>\n                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}\n                </span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit type</span>\n                <span>{{ visit.visitType }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Trend</span>\n                <span>{{ visit.salesTrend }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit goal</span>\n                <span>{{ visit.goalSet }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Days made</span>\n                <span>{{ getSuccessScore() }}</span>\n            </ion-row>\n        </ion-item>\n        <visit-progress\n            padding\n            [goalSet]="visit.goalSet"\n            [progressBars]="visitOriginal.dayResults"\n        ></visit-progress>\n    </ion-list>\n\n    <div padding>\n        <div\n            class="wrapper__day-result"\n            *ngFor="let dayResult of visit?.dayResults; let i = index;"\n        >\n            <ion-row\n                justify-content-between\n                align-items-center\n                class="wrapper__past-results"\n                *ngIf="!isFutureDate(dayResult)"\n            >\n                <div class="wrapper__day-label">\n                    <h3>Day {{ i + 1 }}</h3>\n                    <p>\n                        {{ dateTimeService.timestampToDisplayDate(dayResult.date) }}\n                    </p>\n                </div>\n                <div class="wrapper__day-badge">\n                    <ion-icon\n                        name="cloud-done"\n                        *ngIf="!isFutureDate(dayResult) && savedResultIsEqual(dayResult.result, i)"\n                    ></ion-icon>\n                    <ion-badge\n                        *ngIf="!!dayResult.result"\n                        [color]="dayResultIsGreaterThanOrEqualToGoalSet(dayResult) ? \'primary\' : \'danger\'"\n                    >\n                        {{ dayResult.result }}%\n                    </ion-badge>\n                </div>\n\n            </ion-row>\n            <ion-input\n                *ngIf="!isFutureDate(dayResult)"\n                type="number"\n                [(ngModel)]="dayResult.result"\n                placeholder="Enter today\'s result"\n            ></ion-input>\n        </div>\n\n        <ion-row\n            justify-content-start\n            align-items-center\n            class="wrapper__notes"\n        >\n            <ion-icon name="list-box"></ion-icon>\n            <h4>Notes</h4>\n        </ion-row>\n        <ion-textarea\n            *ngIf="!!visit"\n            [(ngModel)]="visit.note"\n            placeholder="Enter notes here..."\n        >\n            {{ visit.note }}\n        </ion-textarea>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n            full\n        >\n            <button\n                ion-button\n                round\n                large\n                (click)="submit()"\n            >\n                Update\n            </button>\n        </ion-row>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n        >\n            <button\n                ion-button\n                round\n                large\n                color="danger"\n                (click)="closeVisit()"\n            >\n                Close this visit\n            </button>\n        </ion-row>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/
+            selector: 'page-active-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>My active visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content\n    padding\n    *ngIf="!!visit"\n>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit date</span>\n                <span>\n                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}\n                </span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Store</span>\n                <span>{{ visit.store | uppercase }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit type</span>\n                <span>{{ visit.visitType }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Trend</span>\n                <span>{{ visit.salesTrend }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit goal</span>\n                <span>{{ visit.goalSet }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Days made</span>\n                <span>{{ getSuccessScore() }}</span>\n            </ion-row>\n        </ion-item>\n        <visit-progress\n            padding\n            [goalSet]="visit.goalSet"\n            [progressBars]="visitOriginal.dayResults"\n        ></visit-progress>\n    </ion-list>\n\n    <div padding>\n        <div\n            class="wrapper__day-result"\n            *ngFor="let dayResult of visit?.dayResults; let i = index;"\n        >\n            <ion-row\n                justify-content-between\n                align-items-center\n                class="wrapper__past-results"\n                *ngIf="!isFutureDate(dayResult)"\n            >\n                <div class="wrapper__day-label">\n                    <h3>Day {{ i + 1 }}</h3>\n                    <p>\n                        {{ dateTimeService.timestampToDisplayDate(dayResult.date) }}\n                    </p>\n                </div>\n                <div class="wrapper__day-badge">\n                    <ion-icon\n                        name="cloud-done"\n                        *ngIf="!isFutureDate(dayResult) && savedResultIsEqual(dayResult.result, i)"\n                    ></ion-icon>\n                    <ion-badge\n                        *ngIf="!!dayResult.result"\n                        [color]="dayResultIsGreaterThanOrEqualToGoalSet(dayResult) ? \'primary\' : \'danger\'"\n                    >\n                        {{ dayResult.result }}%\n                    </ion-badge>\n                </div>\n\n            </ion-row>\n            <ion-input\n                *ngIf="!isFutureDate(dayResult)"\n                type="number"\n                [(ngModel)]="dayResult.result"\n                placeholder="Enter today\'s result"\n            ></ion-input>\n        </div>\n\n        <ion-row\n            justify-content-start\n            align-items-center\n            class="wrapper__notes"\n        >\n            <ion-icon name="list-box"></ion-icon>\n            <h4>Notes</h4>\n        </ion-row>\n        <ion-textarea\n            *ngIf="!!visit"\n            [(ngModel)]="visit.note"\n            placeholder="Enter notes here..."\n        >\n            {{ visit.note }}\n        </ion-textarea>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n            full\n        >\n            <button\n                ion-button\n                round\n                large\n                (click)="submit()"\n            >\n                Update\n            </button>\n        </ion-row>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n        >\n            <button\n                ion-button\n                round\n                large\n                color="danger"\n                (click)="closeVisit()"\n            >\n                Close this visit\n            </button>\n        </ion-row>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__["a" /* FirebaseService */],
             __WEBPACK_IMPORTED_MODULE_3__app_services_date_time_service__["a" /* DateTimeService */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_modal_modal_controller__["a" /* ModalController */],
-            __WEBPACK_IMPORTED_MODULE_8_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]])
+            __WEBPACK_IMPORTED_MODULE_8_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]])
     ], ActiveVisitPage);
     return ActiveVisitPage;
 }());
@@ -468,20 +482,20 @@ var ActiveVisitPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__create_visit_create_visit__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__create_visit_create_visit__ = __webpack_require__(128);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_services_firebase_service__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular_components_loading_loading_controller__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sign_up_sign_up__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_modal_modal_controller__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_components_modals_encountered_problem_encountered_problem__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__sign_up_sign_up__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular_components_modal_modal_controller__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_components_modals_encountered_problem_encountered_problem__ = __webpack_require__(120);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -543,7 +557,7 @@ var LoginPage = /** @class */ (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/login/login.html"*/'<ion-content padding>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Email"\n                [(ngModel)]="email"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="password"\n                placeholder="Password"\n                [(ngModel)]="password"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="login($event)"\n        >\n            Login\n        </button>\n    </ion-row>\n\n    <ion-row\n        justify-content-center\n        align-items-center\n        padding\n    >\n        <p>Don\'t have an account?</p>\n        <button\n            ion-button\n            round\n            color="secondary"\n            outline\n            (click)="signUp($event)"\n        >\n            Sign up\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/login/login.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/login/login.html"*/'<ion-content padding>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-input\n                type="email"\n                placeholder="Email"\n                [(ngModel)]="email"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="password"\n                placeholder="Password"\n                [(ngModel)]="password"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="login($event)"\n        >\n            Login\n        </button>\n    </ion-row>\n    <ion-row\n        justify-content-center\n        align-items-center\n        padding\n    >\n        <p>Don\'t have an account?</p>\n        <button\n            ion-button\n            round\n            color="secondary"\n            outline\n            (click)="signUp($event)"\n        >\n            Sign up\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/login/login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
@@ -558,7 +572,7 @@ var LoginPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 216:
+/***/ 217:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -568,8 +582,8 @@ var LoginPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3____ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_components_modals_success_signup_success_signup__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_components_modals_create_visit_invalid_create_visit_invalid__ = __webpack_require__(186);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_components_modals_encountered_problem_encountered_problem__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_components_modals_create_visit_invalid_create_visit_invalid__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_components_modals_encountered_problem_encountered_problem__ = __webpack_require__(120);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -594,7 +608,7 @@ var SignUpPage = /** @class */ (function () {
         this.modalCtrl = modalCtrl;
         this.loadingCtrl = loadingCtrl;
     }
-    SignUpPage.prototype.isValid = function () {
+    SignUpPage.prototype.isFormValid = function () {
         return (!!this.email &&
             !!this.password &&
             !!this.passwordConfirmation &&
@@ -604,7 +618,7 @@ var SignUpPage = /** @class */ (function () {
     };
     SignUpPage.prototype.submit = function () {
         var _this = this;
-        if (!this.isValid()) {
+        if (!this.isFormValid()) {
             var invalidModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__app_components_modals_create_visit_invalid_create_visit_invalid__["a" /* CreateVisitInvalidComponent */]);
             invalidModal.present();
             return;
@@ -634,7 +648,7 @@ var SignUpPage = /** @class */ (function () {
     };
     SignUpPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-sign-up',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/sign-up/sign-up.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>Sign up</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="First name"\n                [(ngModel)]="firstName"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Last name"\n                [(ngModel)]="lastName"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Email"\n                [(ngModel)]="email"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="password"\n                placeholder="Password"\n                [(ngModel)]="password"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="password"\n                placeholder="Confirm password"\n                [(ngModel)]="passwordConfirmation"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="submit($event)"\n        >\n            Sign up\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/sign-up/sign-up.html"*/
+            selector: 'page-sign-up',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/sign-up/sign-up.html"*/'<ion-header>\n    <ion-navbar>\n        <ion-title>Sign up</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="First name"\n                [(ngModel)]="firstName"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Last name"\n                [(ngModel)]="lastName"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="email"\n                placeholder="Email"\n                [(ngModel)]="email"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="password"\n                placeholder="Password"\n                [(ngModel)]="password"\n            ></ion-input>\n        </ion-item>\n\n        <ion-item>\n            <ion-input\n                type="password"\n                placeholder="Confirm password"\n                [(ngModel)]="passwordConfirmation"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="submit($event)"\n        >\n            Sign up\n        </button>\n    </ion-row>\n</ion-content>'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/sign-up/sign-up.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
@@ -649,7 +663,7 @@ var SignUpPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 226:
+/***/ 227:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -662,7 +676,7 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 226;
+webpackEmptyAsyncContext.id = 227;
 
 /***/ }),
 
@@ -772,7 +786,7 @@ var SuccessSignupComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'success-signup',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/success-signup/success-signup.html"*/'<h3 class="text-center uppercase">Your account was created successfully</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        block\n        padding\n        (click)="viewCtrl.dismiss()"\n    >\n        Create my first visit\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/success-signup/success-signup.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]])
     ], SuccessSignupComponent);
     return SuccessSignupComponent;
 }());
@@ -842,7 +856,7 @@ var ActiveVisitExistsModalComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'active-visit-exists',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/active-visit-exists/active-visit-exists.html"*/'<h3 class="text-center uppercase">You already have an active visit.</h3>\n<p class="text-center">\n    To create a new visit, first complete the existing visit.\n</p>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        outline\n        (click)="viewCtrl.dismiss()"\n    >\n        Dismiss\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/active-visit-exists/active-visit-exists.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]])
     ], ActiveVisitExistsModalComponent);
     return ActiveVisitExistsModalComponent;
 }());
@@ -877,7 +891,7 @@ var ActiveVisitDoesNotExistComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'active-visit-does-not-exist',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/active-visit-does-not-exist/active-visit-does-not-exist.html"*/'<h3 class="text-center uppercase">You don\'t have an active visit</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        (click)="viewCtrl.dismiss(true)"\n    >\n        Create visit\n    </button>\n</ion-row>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        color="secondary"\n        round\n        outline\n        (click)="viewCtrl.dismiss()"\n    >\n        Dismiss\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/active-visit-does-not-exist/active-visit-does-not-exist.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]])
     ], ActiveVisitDoesNotExistComponent);
     return ActiveVisitDoesNotExistComponent;
 }());
@@ -907,11 +921,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ResultsBoardPage = /** @class */ (function () {
-    function ResultsBoardPage(navCtrl, navParams, fb) {
+    function ResultsBoardPage(navCtrl, navParams, fb, toastCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.fb = fb;
+        this.toastCtrl = toastCtrl;
         fb.getResultsBoard().subscribe(function (results) { return (_this.results = results); });
     }
     ResultsBoardPage.prototype.formatScoreAsPercentage = function (score) {
@@ -920,13 +935,34 @@ var ResultsBoardPage = /** @class */ (function () {
         }
         return (score / 10 * 100).toFixed(1);
     };
+    ResultsBoardPage.prototype.sendAdminBasicReport = function () {
+        var _this = this;
+        this.fb.emailAdminBasicReport().subscribe(function (success) {
+            if (success) {
+                var toast = _this.toastCtrl.create({
+                    message: 'Your report was emailed successfully!',
+                    duration: 2000,
+                    position: 'top'
+                });
+                toast.present();
+            }
+            else {
+                var toast = _this.toastCtrl.create({
+                    message: 'There was a problem generating your report...',
+                    duration: 2000,
+                    position: 'top'
+                });
+            }
+        });
+    };
     ResultsBoardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-results-board',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Results board</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card padding>\n        <ion-row\n            justify-content-between\n            align-items-center\n        >\n            <p>\n                <ion-icon name="time"></ion-icon>\n                Last updated\n            </p>\n            <p>{{ fb.readResultsBoardLastUpdated() }}</p>\n        </ion-row>\n    </ion-card>\n    <ion-row\n        *ngFor="let dmit of results; let i = index;"\n        justify-content-between\n        align-items-center\n        padding\n    >\n        <p>{{ dmit.user }}</p>\n        <h5>\n            {{ dmit.score + \'/10\' }}\n        </h5>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/
+            selector: 'page-results-board',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Results board</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card padding>\n        <ion-row\n            justify-content-between\n            align-items-center\n        >\n            <p>\n                <ion-icon name="time"></ion-icon>\n                Last updated\n            </p>\n            <p>{{ fb.readResultsBoardLastUpdated() }}</p>\n        </ion-row>\n    </ion-card>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="sendAdminBasicReport()"\n        >\n            EMAIL ALL RESULTS\n        </button>\n    </ion-row>\n    <ion-row\n        *ngFor="let dmit of results; let i = index;"\n        justify-content-between\n        align-items-center\n        padding\n    >\n        <p>{{ dmit.user }}</p>\n        <h5>\n            {{ dmit.score + \'/10\' }}\n        </h5>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__["a" /* FirebaseService */]])
+            __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__["a" /* FirebaseService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]])
     ], ResultsBoardPage);
     return ResultsBoardPage;
 }());
@@ -943,7 +979,7 @@ var ResultsBoardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_services_date_time_service__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_services_date_time_service__ = __webpack_require__(186);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -977,7 +1013,7 @@ var VisitHistoryPage = /** @class */ (function () {
     };
     VisitHistoryPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-visit-history',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/visit-history/visit-history.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>My visit history</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list *ngFor="let visit of visitHistory; let i = index;">\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit date</span>\n                <span>\n                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}\n                </span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit type</span>\n                <span>{{ visit.visitType }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Trend</span>\n                <span>{{ visit.salesTrend }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit goal</span>\n                <span>{{ visit.goalSet }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Days made</span>\n                <span>{{ getSuccessScore(visit) }}</span>\n            </ion-row>\n        </ion-item>\n        <visit-progress\n            padding\n            [goalSet]="visit.goalSet"\n            [progressBars]="visit.dayResults"\n        ></visit-progress>\n\n        <hr *ngIf="i + 1 !== visitHistory.length">\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/visit-history/visit-history.html"*/
+            selector: 'page-visit-history',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/visit-history/visit-history.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>My visit history</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list *ngFor="let visit of visitHistory; let i = index;">\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit date</span>\n                <span>\n                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}\n                </span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Store</span>\n                <span>{{ visit.store }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit type</span>\n                <span>{{ visit.visitType }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Trend</span>\n                <span>{{ visit.salesTrend }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit goal</span>\n                <span>{{ visit.goalSet }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Days made</span>\n                <span>{{ getSuccessScore(visit) }}</span>\n            </ion-row>\n        </ion-item>\n        <visit-progress\n            padding\n            [goalSet]="visit.goalSet"\n            [progressBars]="visit.dayResults"\n        ></visit-progress>\n\n        <hr *ngIf="i + 1 !== visitHistory.length">\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/visit-history/visit-history.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
@@ -1011,26 +1047,26 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(564);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(364);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(367);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_firebase_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_log_service__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_log_service__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__interceptors_httpLogger_interceptor__ = __webpack_require__(573);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_date_time_service__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_date_time_service__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_visit_progress_visit_progress__ = __webpack_require__(670);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_modals_active_visit_exists_active_visit_exists__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_modals_active_visit_does_not_exist_active_visit_does_not_exist__ = __webpack_require__(369);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_modals_success_success__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_modals_success_success__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_modals_submit_completed_visit_submit_completed_visit__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_modals_create_visit_invalid_create_visit_invalid__ = __webpack_require__(186);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_sign_up_sign_up__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_modals_create_visit_invalid_create_visit_invalid__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_sign_up_sign_up__ = __webpack_require__(217);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_modals_success_signup_success_signup__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_modals_encountered_problem_encountered_problem__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_modals_encountered_problem_encountered_problem__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_modals_close_visit_close_visit__ = __webpack_require__(325);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1092,7 +1128,7 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/sign-up/sign-up.module#SignUpPageModule', name: 'SignUpPage', segment: 'sign-up', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/visit-history/visit-history.module#VisitHistoryPageModule', name: 'VisitHistoryPage', segment: 'visit-history', priority: 'low', defaultHistory: [] }
                     ]
-                })],
+                }), __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpClientModule */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* MyApp */],
@@ -1173,6 +1209,8 @@ function generateDayResults(visitDate) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_observable_of__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase_firestore__ = __webpack_require__(505);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase_firestore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase_firestore__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__log_service__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(137);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -1196,9 +1234,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var FirebaseService = /** @class */ (function () {
-    function FirebaseService() {
+    function FirebaseService(httpClient) {
         var _this = this;
+        this.httpClient = httpClient;
         this._user = null;
         this._visitTypes = [];
         this._resultsBoardLastUpdated = new Date().toLocaleTimeString();
@@ -1246,6 +1287,7 @@ var FirebaseService = /** @class */ (function () {
             .createUserWithEmailAndPassword(email, password)
             .then(function (success) {
             successSubject.next(true);
+            successSubject.complete();
             __WEBPACK_IMPORTED_MODULE_1_firebase___default.a
                 .firestore()
                 .doc("users/" + email)
@@ -1264,10 +1306,12 @@ var FirebaseService = /** @class */ (function () {
             };
         }, function (error) {
             successSubject.next(false);
+            successSubject.complete();
         });
         return successSubject;
     };
     FirebaseService.prototype.createVisit = function (visit) {
+        visit.userName = this._user.firstName + " " + this._user.lastName;
         var newVisitSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
         __WEBPACK_IMPORTED_MODULE_1_firebase___default.a
             .firestore()
@@ -1277,6 +1321,19 @@ var FirebaseService = /** @class */ (function () {
             newVisitSubject.next(true);
         });
         return newVisitSubject;
+    };
+    FirebaseService.prototype.emailAdminBasicReport = function () {
+        var successSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
+        this.httpClient
+            .get("https://us-central1-dmit-visit-tracker.cloudfunctions.net/sendAdminBasicReportAsCSV?email=" + this._user.id)
+            .subscribe(function (response) {
+            __WEBPACK_IMPORTED_MODULE_6__log_service__["a" /* LogService */].log(FirebaseService_1.name, response);
+            successSubject.next(true);
+        }, function (error) {
+            __WEBPACK_IMPORTED_MODULE_6__log_service__["a" /* LogService */].log(FirebaseService_1.name, error);
+            successSubject.next(false);
+        });
+        return successSubject;
     };
     FirebaseService.prototype.getActiveVisit = function (userId) {
         var _this = this;
@@ -1387,7 +1444,7 @@ var FirebaseService = /** @class */ (function () {
     };
     FirebaseService = FirebaseService_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__angular_common_http__["b" /* HttpClient */]])
     ], FirebaseService);
     return FirebaseService;
     var FirebaseService_1;
@@ -1407,9 +1464,9 @@ var FirebaseService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(364);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(367);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_firebase_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_create_visit_create_visit__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_active_visit_active_visit__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_create_visit_create_visit__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_active_visit_active_visit__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_index__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_modals_active_visit_exists_active_visit_exists__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_modals_active_visit_does_not_exist_active_visit_does_not_exist__ = __webpack_require__(369);
@@ -1503,11 +1560,11 @@ var MyApp = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HttpLoggerInterceptor; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operators__ = __webpack_require__(574);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_log_service__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_log_service__ = __webpack_require__(118);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1526,7 +1583,7 @@ var HttpLoggerInterceptor = /** @class */ (function () {
         __WEBPACK_IMPORTED_MODULE_3__services_log_service__["a" /* LogService */].logHttpRequest(request);
         return next.handle(request).pipe(Object(__WEBPACK_IMPORTED_MODULE_2_rxjs_operators__["tap"])(function (response) {
             var end = Date.now();
-            if (response instanceof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["b" /* HttpResponse */]) {
+            if (response instanceof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["d" /* HttpResponse */]) {
                 __WEBPACK_IMPORTED_MODULE_3__services_log_service__["a" /* LogService */].logHttpResponse(response, end - start);
             }
         }, function (error) { return __WEBPACK_IMPORTED_MODULE_3__services_log_service__["a" /* LogService */].logHttpError(error); }));
@@ -1547,7 +1604,7 @@ var HttpLoggerInterceptor = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VisitProgressComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_log_service__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_log_service__ = __webpack_require__(118);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1599,15 +1656,15 @@ var VisitProgressComponent = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__login_login__ = __webpack_require__(216);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_0__login_login__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__active_visit_active_visit__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__active_visit_active_visit__ = __webpack_require__(215);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__active_visit_active_visit__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__results_board_results_board__ = __webpack_require__(386);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__results_board_results_board__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__visit_history_visit_history__ = __webpack_require__(387);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_3__visit_history_visit_history__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__create_visit_create_visit__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__create_visit_create_visit__ = __webpack_require__(128);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_4__create_visit_create_visit__["a"]; });
 
 

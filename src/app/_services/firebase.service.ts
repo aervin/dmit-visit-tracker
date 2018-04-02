@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'firebase/firestore';
 import { LogService } from './log.service';
+import { HttpClient } from '@angular/common/http';
 
 export interface FirebaseUser {
     email: string;
@@ -33,9 +34,11 @@ export interface Visit {
     salesTrend: string;
     status: VisitStatus;
     userId: string;
+    userName: string;
     visitDate: string;
     visitType: string;
     note: string;
+    store: string | null;
 }
 
 @Injectable()
@@ -55,7 +58,7 @@ export class FirebaseService {
     private _visitTypes: { displayText: string }[] = [];
     private _resultsBoardLastUpdated: string = new Date().toLocaleTimeString();
 
-    constructor() {
+    constructor(private httpClient: HttpClient) {
         try {
             firebase.initializeApp(FirebaseService.FIREBASE_CREDENTIALS);
             firebase
@@ -104,6 +107,7 @@ export class FirebaseService {
             .then(
                 success => {
                     successSubject.next(true);
+                    successSubject.complete();
                     firebase
                         .firestore()
                         .doc(`users/${email}`)
@@ -123,12 +127,14 @@ export class FirebaseService {
                 },
                 error => {
                     successSubject.next(false);
+                    successSubject.complete();
                 }
             );
         return successSubject;
     }
 
     public createVisit(visit: Visit): Observable<boolean> {
+        visit.userName = `${this._user.firstName} ${this._user.lastName}`;
         const newVisitSubject: Subject<boolean> = new Subject();
         firebase
             .firestore()
@@ -138,6 +144,27 @@ export class FirebaseService {
                 newVisitSubject.next(true);
             });
         return newVisitSubject;
+    }
+
+    public emailAdminBasicReport(): Observable<boolean> {
+        const successSubject: Subject<boolean> = new Subject();
+        this.httpClient
+            .get(
+                `https://us-central1-dmit-visit-tracker.cloudfunctions.net/sendAdminBasicReportAsCSV?email=${
+                    this._user.id
+                }`
+            )
+            .subscribe(
+                response => {
+                    LogService.log(FirebaseService.name, response);
+                    successSubject.next(true);
+                },
+                error => {
+                    LogService.log(FirebaseService.name, error);
+                    successSubject.next(false);
+                }
+            );
+        return successSubject;
     }
 
     public getActiveVisit(userId: string): Observable<Visit | undefined> {

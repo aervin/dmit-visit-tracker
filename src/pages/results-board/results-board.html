@@ -23,6 +23,18 @@
             <p>{{ fb.readResultsBoardLastUpdated() }}</p>
         </ion-row>
     </ion-card>
+    <ion-row justify-content-center>
+        <button
+            ion-button
+            round
+            block
+            large
+            padding
+            (click)="sendAdminBasicReport()"
+        >
+            EMAIL ALL RESULTS
+        </button>
+    </ion-row>
     <ion-row
         *ngFor="let dmit of results; let i = index;"
         justify-content-between

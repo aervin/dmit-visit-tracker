@@ -35,6 +35,15 @@
                 justify-content-between
                 align-items-center
             >
+                <span>Store</span>
+                <span>{{ visit.store | uppercase }}</span>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row
+                justify-content-between
+                align-items-center
+            >
                 <span>Visit type</span>
                 <span>{{ visit.visitType }}</span>
             </ion-row>
@@ -106,7 +115,8 @@
             </ion-row>
             <ion-input
                 *ngIf="!isFutureDate(dayResult)"
-                type="number"
+                type="text"
+                (input)="standardizeInput($event)"
                 [(ngModel)]="dayResult.result"
                 placeholder="Enter today's result"
             ></ion-input>

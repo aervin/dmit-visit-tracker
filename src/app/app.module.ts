@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -46,7 +46,7 @@ import { CloseVisitComponent } from './_components/_modals/close-visit/close-vis
         VisitHistoryPage,
         VisitProgressComponent
     ],
-    imports: [BrowserModule, IonicModule.forRoot(MyApp)],
+    imports: [BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,

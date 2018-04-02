@@ -21,6 +21,13 @@
             ></ion-datetime>
         </ion-item>
         <ion-item>
+            <ion-input
+                type="text"
+                placeholder="Store"
+                [(ngModel)]="newVisit.store"
+            ></ion-input>
+        </ion-item>
+        <ion-item>
             <ion-label>Visit type</ion-label>
             <ion-select [(ngModel)]="newVisit.visitType">
                 <ion-option
@@ -33,14 +40,16 @@
         </ion-item>
         <ion-item>
             <ion-input
-                type="number"
+                type="text"
+                (input)="standardizeInput($event)"
                 placeholder="6 week trend"
                 [(ngModel)]="newVisit.salesTrend"
             ></ion-input>
         </ion-item>
         <ion-item>
             <ion-input
-                type="number"
+                type="text"
+                (input)="standardizeInput($event)"
                 placeholder="Goal set"
                 [(ngModel)]="newVisit.goalSet"
             ></ion-input>

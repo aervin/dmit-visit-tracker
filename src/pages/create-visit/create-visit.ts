@@ -16,12 +16,14 @@ export class CreateVisitPage {
     public newVisit: Visit = {
         dayResults: null,
         userId: this.fb.readUserProfile().id,
+        userName: '',
         goalSet: null,
         note: '',
         salesTrend: null,
         visitDate: new Date().toISOString(),
         status: 'active',
-        visitType: null
+        visitType: null,
+        store: null
     };
     constructor(
         public navCtrl: NavController,
@@ -36,6 +38,7 @@ export class CreateVisitPage {
             this.newVisit.goalSet === null ||
             this.newVisit.salesTrend === null ||
             this.newVisit.visitType === null ||
+            this.newVisit.store === null ||
             this.goalIsInvalid()
         ) {
             const invalidModal = this.modalCtrl.create(CreateVisitInvalidComponent);
@@ -62,9 +65,17 @@ export class CreateVisitPage {
 
     public goalIsInvalid(): boolean {
         try {
-            return parseFloat(this.newVisit.goalSet) <= parseFloat(this.newVisit.salesTrend);
+            return (
+                parseFloat(this.newVisit.goalSet) <= parseFloat(this.newVisit.salesTrend)
+            );
         } catch {
             return true;
         }
+    }
+
+    public standardizeInput(event: KeyboardEvent): void {
+        (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value
+            .replace(/[^0-9.-]/g, '')
+            .replace(/(\..*)\./g, '$1');
     }
 }
