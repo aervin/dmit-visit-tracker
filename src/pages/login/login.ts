@@ -24,7 +24,9 @@ export class LoginPage {
         private fb: FirebaseService,
         private loadingCtrl: LoadingController,
         private modalCtrl: ModalController
-    ) {}
+    ) {
+        this.fb.clearUserData();
+    }
 
     public login(): void {
         const loader = this.loadingCtrl.create({
@@ -61,7 +63,7 @@ export class LoginPage {
             error => {}
         );
     }
-    
+
     public signUp(event: Event): void {
         this.navCtrl.push(SignUpPage);
     }

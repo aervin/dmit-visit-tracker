@@ -25811,6 +25811,11 @@ p.result.success {
   color: white;
 }
 
+p.result.failure {
+  background: #f53d3d;
+  color: white;
+}
+
 ion-badge {
   padding: 8px 16px !important;
 }

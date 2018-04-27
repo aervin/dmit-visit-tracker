@@ -12,6 +12,7 @@
             [class.first]="i === 0"
             [class.last]="i === 4"
             [class.success]="didMeetGoal(progressBar.result)"
+            [class.failure]="didNotMeetGoal(progressBar.result)"
         >
             {{ !!progressBar.result ? progressBar.result + '%' : '' }}
         </p>
@@ -31,6 +32,7 @@
             [class.first]="i === 0"
             [class.last]="i === 4"
             [class.success]="didMeetGoal(progressBar.result)"
+            [class.failure]="didNotMeetGoal(progressBar.result)"
         >
             {{ !!progressBar.result ? progressBar.result + '%' : '' }}
         </p>

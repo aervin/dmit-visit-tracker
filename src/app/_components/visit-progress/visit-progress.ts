@@ -21,4 +21,12 @@ export class VisitProgressComponent {
             return false;
         }
     }
+
+    public didNotMeetGoal(result: string | null): boolean {
+        if (result !== null) {
+            return parseFloat(result) < parseFloat(this.goalSet);
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { FirebaseService } from '../../app/_services/firebase.service';
+import {
+    IonicPage,
+    NavController,
+    NavParams,
+    ToastController,
+    LoadingController
+} from 'ionic-angular';
+import { FirebaseService, User } from '../../app/_services/firebase.service';
 import { LogService } from '../../app/_services/log.service';
 
 @IonicPage()
@@ -10,13 +16,16 @@ import { LogService } from '../../app/_services/log.service';
 })
 export class ResultsBoardPage {
     public results;
+    public user: User;
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         public fb: FirebaseService,
-        private toastCtrl: ToastController
+        private toastCtrl: ToastController,
+        private loadingCtrl: LoadingController
     ) {
         fb.getResultsBoard().subscribe(results => (this.results = results));
+        this.user = this.fb.readUserProfile();
     }
 
     public formatScoreAsPercentage(score: number): string {
@@ -27,21 +36,30 @@ export class ResultsBoardPage {
     }
 
     public sendAdminBasicReport(): void {
-        this.fb.emailAdminBasicReport().subscribe(success => {
-            if (success) {
-                const toast = this.toastCtrl.create({
-                    message: 'Your report was emailed successfully!',
-                    duration: 2000,
-                    position: 'top'
-                });
-                toast.present();
-            } else {
-                const toast = this.toastCtrl.create({
-                    message: 'There was a problem generating your report...',
-                    duration: 2000,
-                    position: 'top'
-                });
-            }
+        const loader = this.loadingCtrl.create({
+            content: 'Generating your report...'
         });
+        loader.present();
+        this.fb.emailAdminBasicReport().subscribe(
+            success => {
+                loader.dismiss();
+                if (success) {
+                    const toast = this.toastCtrl.create({
+                        message: 'Your report was emailed successfully!',
+                        duration: 2000,
+                        position: 'top'
+                    });
+                    toast.present();
+                } else {
+                    const toast = this.toastCtrl.create({
+                        message: 'There was a problem generating your report...',
+                        duration: 2000,
+                        position: 'top'
+                    });
+                    toast.present();
+                }
+            },
+            error => loader.dismiss()
+        )
     }
 }

@@ -31,4 +31,8 @@ p.result {
         background: #82c341;
         color: white;
     }
+    &.failure {
+        background: #f53d3d;
+        color: white;
+    }
 }

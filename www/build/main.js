@@ -98,7 +98,7 @@ var EncounteredProblemComponent = /** @class */ (function () {
     }
     EncounteredProblemComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'encountered-problem',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/'<h3 class="text-center uppercase">The was a problem</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        color="secondary"\n        (click)="viewCtrl.dismiss()"\n    >\n        I understand\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/
+            selector: 'encountered-problem',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/'<h3 class="text-center uppercase">There was a problem</h3>\n<ion-row justify-content-center>\n    <button\n        ion-button\n        large\n        round\n        color="secondary"\n        (click)="viewCtrl.dismiss()"\n    >\n        I understand\n    </button>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/_modals/encountered-problem/encountered-problem.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]])
     ], EncounteredProblemComponent);
@@ -194,14 +194,9 @@ var CreateVisitPage = /** @class */ (function () {
             return true;
         }
     };
-    CreateVisitPage.prototype.standardizeInput = function (event) {
-        event.target.value = event.target.value
-            .replace(/[^0-9.-]/g, '')
-            .replace(/(\..*)\./g, '$1');
-    };
     CreateVisitPage = CreateVisitPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-create-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>New visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-datetime\n                displayFormat="MM/DD/YYYY"\n                pickerFormat="MM/DD/YYYY"\n                placeholder="Visit date"\n                [(ngModel)]="newVisit.visitDate"\n            ></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Store"\n                [(ngModel)]="newVisit.store"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label>Visit type</ion-label>\n            <ion-select [(ngModel)]="newVisit.visitType">\n                <ion-option\n                    *ngFor="let type of fb.readVisitTypes()"\n                    [value]="type.displayText"\n                >\n                    {{ type.displayText }}\n                </ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                (input)="standardizeInput($event)"\n                placeholder="6 week trend"\n                [(ngModel)]="newVisit.salesTrend"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                (input)="standardizeInput($event)"\n                placeholder="Goal set"\n                [(ngModel)]="newVisit.goalSet"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            large\n            (click)="createVisit()"\n        >\n            <ion-icon name="new"></ion-icon>\n            Create visit\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/
+            selector: 'page-create-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>New visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-list>\n        <ion-item>\n            <ion-datetime\n                displayFormat="MM/DD/YYYY"\n                pickerFormat="MM/DD/YYYY"\n                placeholder="Visit date"\n                [(ngModel)]="newVisit.visitDate"\n            ></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                placeholder="Store"\n                [(ngModel)]="newVisit.store"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label>Visit type</ion-label>\n            <ion-select [(ngModel)]="newVisit.visitType">\n                <ion-option\n                    *ngFor="let type of fb.readVisitTypes()"\n                    [value]="type.displayText"\n                >\n                    {{ type.displayText }}\n                </ion-option>\n            </ion-select>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                [(ngModel)]="newVisit.salesTrend"\n                placeholder="6 week trend"\n            ></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-input\n                type="text"\n                [(ngModel)]="newVisit.goalSet"\n                placeholder="Goal set"\n            ></ion-input>\n        </ion-item>\n    </ion-list>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            large\n            (click)="createVisit()"\n        >\n            <ion-icon name="new"></ion-icon>\n            Create visit\n        </button>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/create-visit/create-visit.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
@@ -465,7 +460,7 @@ var ActiveVisitPage = /** @class */ (function () {
     };
     ActiveVisitPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-active-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>My active visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content\n    padding\n    *ngIf="!!visit"\n>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit date</span>\n                <span>\n                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}\n                </span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Store</span>\n                <span>{{ visit.store | uppercase }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit type</span>\n                <span>{{ visit.visitType }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Trend</span>\n                <span>{{ visit.salesTrend }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit goal</span>\n                <span>{{ visit.goalSet }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Days made</span>\n                <span>{{ getSuccessScore() }}</span>\n            </ion-row>\n        </ion-item>\n        <visit-progress\n            padding\n            [goalSet]="visit.goalSet"\n            [progressBars]="visitOriginal.dayResults"\n        ></visit-progress>\n    </ion-list>\n\n    <div padding>\n        <div\n            class="wrapper__day-result"\n            *ngFor="let dayResult of visit?.dayResults; let i = index;"\n        >\n            <ion-row\n                justify-content-between\n                align-items-center\n                class="wrapper__past-results"\n                *ngIf="!isFutureDate(dayResult)"\n            >\n                <div class="wrapper__day-label">\n                    <h3>Day {{ i + 1 }}</h3>\n                    <p>\n                        {{ dateTimeService.timestampToDisplayDate(dayResult.date) }}\n                    </p>\n                </div>\n                <div class="wrapper__day-badge">\n                    <ion-icon\n                        name="cloud-done"\n                        *ngIf="!isFutureDate(dayResult) && savedResultIsEqual(dayResult.result, i)"\n                    ></ion-icon>\n                    <ion-badge\n                        *ngIf="!!dayResult.result"\n                        [color]="dayResultIsGreaterThanOrEqualToGoalSet(dayResult) ? \'primary\' : \'danger\'"\n                    >\n                        {{ dayResult.result }}%\n                    </ion-badge>\n                </div>\n\n            </ion-row>\n            <ion-input\n                *ngIf="!isFutureDate(dayResult)"\n                type="number"\n                [(ngModel)]="dayResult.result"\n                placeholder="Enter today\'s result"\n            ></ion-input>\n        </div>\n\n        <ion-row\n            justify-content-start\n            align-items-center\n            class="wrapper__notes"\n        >\n            <ion-icon name="list-box"></ion-icon>\n            <h4>Notes</h4>\n        </ion-row>\n        <ion-textarea\n            *ngIf="!!visit"\n            [(ngModel)]="visit.note"\n            placeholder="Enter notes here..."\n        >\n            {{ visit.note }}\n        </ion-textarea>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n            full\n        >\n            <button\n                ion-button\n                round\n                large\n                (click)="submit()"\n            >\n                Update\n            </button>\n        </ion-row>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n        >\n            <button\n                ion-button\n                round\n                large\n                color="danger"\n                (click)="closeVisit()"\n            >\n                Close this visit\n            </button>\n        </ion-row>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/
+            selector: 'page-active-visit',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>My active visit</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content\n    padding\n    *ngIf="!!visit"\n>\n    <img\n        src="assets/imgs/logo.png"\n        class="dmit-logo"\n    >\n    <ion-list>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit date</span>\n                <span>\n                    {{ dateTimeService.timestampToDisplayDate(visit.visitDate) }}\n                </span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Store</span>\n                <span>{{ visit.store | uppercase }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit type</span>\n                <span>{{ visit.visitType }}</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Trend</span>\n                <span>{{ visit.salesTrend }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Visit goal</span>\n                <span>{{ visit.goalSet }}%</span>\n            </ion-row>\n        </ion-item>\n        <ion-item>\n            <ion-row\n                justify-content-between\n                align-items-center\n            >\n                <span>Days made</span>\n                <span>{{ getSuccessScore() }}</span>\n            </ion-row>\n        </ion-item>\n        <visit-progress\n            padding\n            [goalSet]="visit.goalSet"\n            [progressBars]="visitOriginal.dayResults"\n        ></visit-progress>\n    </ion-list>\n\n    <div padding>\n        <div\n            class="wrapper__day-result"\n            *ngFor="let dayResult of visit?.dayResults; let i = index;"\n        >\n            <ion-row\n                justify-content-between\n                align-items-center\n                class="wrapper__past-results"\n                *ngIf="!isFutureDate(dayResult)"\n            >\n                <div class="wrapper__day-label">\n                    <h3>Day {{ i + 1 }}</h3>\n                    <p>\n                        {{ dateTimeService.timestampToDisplayDate(dayResult.date) }}\n                    </p>\n                </div>\n                <div class="wrapper__day-badge">\n                    <ion-icon\n                        name="cloud-done"\n                        *ngIf="!isFutureDate(dayResult) && savedResultIsEqual(dayResult.result, i)"\n                    ></ion-icon>\n                    <ion-badge\n                        *ngIf="!!dayResult.result"\n                        [color]="dayResultIsGreaterThanOrEqualToGoalSet(dayResult) ? \'primary\' : \'danger\'"\n                    >\n                        {{ dayResult.result }}%\n                    </ion-badge>\n                </div>\n\n            </ion-row>\n            <ion-input\n                *ngIf="!isFutureDate(dayResult)"\n                type="text"\n                [(ngModel)]="dayResult.result"\n                placeholder="Enter a new result"\n            ></ion-input>\n        </div>\n\n        <ion-row\n            justify-content-start\n            align-items-center\n            class="wrapper__notes"\n        >\n            <ion-icon name="list-box"></ion-icon>\n            <h4>Notes</h4>\n        </ion-row>\n        <ion-textarea\n            *ngIf="!!visit"\n            [(ngModel)]="visit.note"\n            placeholder="Enter notes here..."\n        >\n            {{ visit.note }}\n        </ion-textarea>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n            full\n        >\n            <button\n                ion-button\n                round\n                large\n                (click)="submit()"\n            >\n                Update\n            </button>\n        </ion-row>\n        <ion-row\n            justify-content-center\n            align-items-center\n            padding\n        >\n            <button\n                ion-button\n                round\n                large\n                color="danger"\n                (click)="closeVisit()"\n            >\n                Close this visit\n            </button>\n        </ion-row>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/active-visit/active-visit.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
@@ -521,6 +516,7 @@ var LoginPage = /** @class */ (function () {
         this.fb = fb;
         this.loadingCtrl = loadingCtrl;
         this.modalCtrl = modalCtrl;
+        this.fb.clearUserData();
     }
     LoginPage.prototype.login = function () {
         var _this = this;
@@ -921,13 +917,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ResultsBoardPage = /** @class */ (function () {
-    function ResultsBoardPage(navCtrl, navParams, fb, toastCtrl) {
+    function ResultsBoardPage(navCtrl, navParams, fb, toastCtrl, loadingCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.fb = fb;
         this.toastCtrl = toastCtrl;
+        this.loadingCtrl = loadingCtrl;
         fb.getResultsBoard().subscribe(function (results) { return (_this.results = results); });
+        this.user = this.fb.readUserProfile();
     }
     ResultsBoardPage.prototype.formatScoreAsPercentage = function (score) {
         if (score <= 0) {
@@ -937,7 +935,12 @@ var ResultsBoardPage = /** @class */ (function () {
     };
     ResultsBoardPage.prototype.sendAdminBasicReport = function () {
         var _this = this;
+        var loader = this.loadingCtrl.create({
+            content: 'Generating your report...'
+        });
+        loader.present();
         this.fb.emailAdminBasicReport().subscribe(function (success) {
+            loader.dismiss();
             if (success) {
                 var toast = _this.toastCtrl.create({
                     message: 'Your report was emailed successfully!',
@@ -952,17 +955,19 @@ var ResultsBoardPage = /** @class */ (function () {
                     duration: 2000,
                     position: 'top'
                 });
+                toast.present();
             }
-        });
+        }, function (error) { return loader.dismiss(); });
     };
     ResultsBoardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-results-board',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Results board</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card padding>\n        <ion-row\n            justify-content-between\n            align-items-center\n        >\n            <p>\n                <ion-icon name="time"></ion-icon>\n                Last updated\n            </p>\n            <p>{{ fb.readResultsBoardLastUpdated() }}</p>\n        </ion-row>\n    </ion-card>\n    <ion-row justify-content-center>\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="sendAdminBasicReport()"\n        >\n            EMAIL ALL RESULTS\n        </button>\n    </ion-row>\n    <ion-row\n        *ngFor="let dmit of results; let i = index;"\n        justify-content-between\n        align-items-center\n        padding\n    >\n        <p>{{ dmit.user }}</p>\n        <h5>\n            {{ dmit.score + \'/10\' }}\n        </h5>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/
+            selector: 'page-results-board',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/'<ion-header>\n    <ion-navbar>\n        <button\n            ion-button\n            menuToggle\n        >\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Results board</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card padding>\n        <ion-row\n            justify-content-between\n            align-items-center\n        >\n            <p>\n                <ion-icon name="time"></ion-icon>\n                Last updated\n            </p>\n            <p>{{ fb.readResultsBoardLastUpdated() }}</p>\n        </ion-row>\n    </ion-card>\n    <ion-row justify-content-center *ngIf="user.admin">\n        <button\n            ion-button\n            round\n            block\n            large\n            padding\n            (click)="sendAdminBasicReport()"\n        >\n            EMAIL ALL RESULTS\n        </button>\n    </ion-row>\n    <ion-row\n        *ngFor="let dmit of results; let i = index;"\n        justify-content-between\n        align-items-center\n        padding\n    >\n        <p>{{ dmit.user }}</p>\n        <h5>\n            {{ dmit.score + \'/10\' }}\n        </h5>\n    </ion-row>\n</ion-content>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/pages/results-board/results-board.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__app_services_firebase_service__["a" /* FirebaseService */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
     ], ResultsBoardPage);
     return ResultsBoardPage;
 }());
@@ -1279,6 +1284,11 @@ var FirebaseService = /** @class */ (function () {
         });
         return userSubject;
     };
+    FirebaseService.prototype.clearUserData = function () {
+        this.user = null;
+        this._activeVisit = undefined;
+        this._visitHistory = undefined;
+    };
     FirebaseService.prototype.createUser = function (email, password, username) {
         var _this = this;
         var successSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
@@ -1295,14 +1305,14 @@ var FirebaseService = /** @class */ (function () {
                 email: email,
                 bestScore: 0,
                 firstName: username.firstName,
-                lastName: username.lastName
+                lastName: username.lastName,
             });
             _this._user = {
                 id: email,
                 email: email,
                 firstName: username.firstName,
                 lastName: username.lastName,
-                bestScore: 0
+                bestScore: 0,
             };
         }, function (error) {
             successSubject.next(false);
@@ -1312,6 +1322,8 @@ var FirebaseService = /** @class */ (function () {
     };
     FirebaseService.prototype.createVisit = function (visit) {
         visit.userName = this._user.firstName + " " + this._user.lastName;
+        visit.goalSet = removeNonDecimalChars(visit.goalSet);
+        visit.salesTrend = removeNonDecimalChars(visit.salesTrend);
         var newVisitSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
         __WEBPACK_IMPORTED_MODULE_1_firebase___default.a
             .firestore()
@@ -1363,7 +1375,7 @@ var FirebaseService = /** @class */ (function () {
             var resultsBoard = usersSnapshot.docs.map(function (userDoc) {
                 return {
                     user: userDoc.data().firstName + ' ' + userDoc.data().lastName,
-                    score: userDoc.data().bestScore
+                    score: userDoc.data().bestScore,
                 };
             });
             resultBoardSubject.next(resultsBoard);
@@ -1419,6 +1431,9 @@ var FirebaseService = /** @class */ (function () {
     FirebaseService.prototype.updateActiveVisit = function (visit) {
         var _this = this;
         var successSubject = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
+        visit.dayResults = visit.dayResults.map(function (result) {
+            return { date: result.date, result: removeNonDecimalChars(result.result) };
+        });
         __WEBPACK_IMPORTED_MODULE_1_firebase___default.a
             .firestore()
             .collection('visits')
@@ -1440,7 +1455,7 @@ var FirebaseService = /** @class */ (function () {
         databaseURL: 'https://dmit-visit-tracker.firebaseio.com',
         projectId: 'dmit-visit-tracker',
         storageBucket: 'dmit-visit-tracker.appspot.com',
-        messagingSenderId: '648342855448'
+        messagingSenderId: '648342855448',
     };
     FirebaseService = FirebaseService_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -1450,6 +1465,9 @@ var FirebaseService = /** @class */ (function () {
     var FirebaseService_1;
 }());
 
+function removeNonDecimalChars(value) {
+    return typeof value === 'string' ? value.replace(/[^0-9.-]/g, '') : null;
+}
 //# sourceMappingURL=firebase.service.js.map
 
 /***/ }),
@@ -1631,6 +1649,14 @@ var VisitProgressComponent = /** @class */ (function () {
             return false;
         }
     };
+    VisitProgressComponent.prototype.didNotMeetGoal = function (result) {
+        if (result !== null) {
+            return parseFloat(result) < parseFloat(this.goalSet);
+        }
+        else {
+            return false;
+        }
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
         __metadata("design:type", Array)
@@ -1641,7 +1667,7 @@ var VisitProgressComponent = /** @class */ (function () {
     ], VisitProgressComponent.prototype, "goalSet", void 0);
     VisitProgressComponent = VisitProgressComponent_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'visit-progress',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/visit-progress/visit-progress.html"*/'<ion-row\n    align-items-center\n    class="visit-progress"\n>\n    <div\n        style="width: 20%;"\n        *ngFor="let progressBar of progressBars | slice:0:5; let i = index;"\n    >\n        <h3 class="text-center">{{ \'DAY \' + (i + 1) }}</h3>\n        <p\n            class="text-center result"\n            [class.first]="i === 0"\n            [class.last]="i === 4"\n            [class.success]="didMeetGoal(progressBar.result)"\n        >\n            {{ !!progressBar.result ? progressBar.result + \'%\' : \'\' }}\n        </p>\n    </div>\n</ion-row>\n<ion-row\n    align-items-center\n    class="visit-progress"\n>\n    <div\n        style="width: 20%;"\n        *ngFor="let progressBar of progressBars | slice:5:10; let i = index;"\n    >\n        <h3 class="text-center">{{ \'DAY \' + (i + 6) }}</h3>\n        <p\n            class="text-center result"\n            [class.first]="i === 0"\n            [class.last]="i === 4"\n            [class.success]="didMeetGoal(progressBar.result)"\n        >\n            {{ !!progressBar.result ? progressBar.result + \'%\' : \'\' }}\n        </p>\n    </div>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/visit-progress/visit-progress.html"*/
+            selector: 'visit-progress',template:/*ion-inline-start:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/visit-progress/visit-progress.html"*/'<ion-row\n    align-items-center\n    class="visit-progress"\n>\n    <div\n        style="width: 20%;"\n        *ngFor="let progressBar of progressBars | slice:0:5; let i = index;"\n    >\n        <h3 class="text-center">{{ \'DAY \' + (i + 1) }}</h3>\n        <p\n            class="text-center result"\n            [class.first]="i === 0"\n            [class.last]="i === 4"\n            [class.success]="didMeetGoal(progressBar.result)"\n            [class.failure]="didNotMeetGoal(progressBar.result)"\n        >\n            {{ !!progressBar.result ? progressBar.result + \'%\' : \'\' }}\n        </p>\n    </div>\n</ion-row>\n<ion-row\n    align-items-center\n    class="visit-progress"\n>\n    <div\n        style="width: 20%;"\n        *ngFor="let progressBar of progressBars | slice:5:10; let i = index;"\n    >\n        <h3 class="text-center">{{ \'DAY \' + (i + 6) }}</h3>\n        <p\n            class="text-center result"\n            [class.first]="i === 0"\n            [class.last]="i === 4"\n            [class.success]="didMeetGoal(progressBar.result)"\n            [class.failure]="didNotMeetGoal(progressBar.result)"\n        >\n            {{ !!progressBar.result ? progressBar.result + \'%\' : \'\' }}\n        </p>\n    </div>\n</ion-row>\n'/*ion-inline-end:"/home/aaron/Desktop/dmit-visit-tracker/src/app/_components/visit-progress/visit-progress.html"*/
         })
     ], VisitProgressComponent);
     return VisitProgressComponent;

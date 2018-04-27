@@ -18,6 +18,7 @@ export interface User {
     email: string;
     firstName: string;
     lastName: string;
+    admin?: boolean;
 }
 
 export interface DayResult {
@@ -49,7 +50,7 @@ export class FirebaseService {
         databaseURL: 'https://dmit-visit-tracker.firebaseio.com',
         projectId: 'dmit-visit-tracker',
         storageBucket: 'dmit-visit-tracker.appspot.com',
-        messagingSenderId: '648342855448'
+        messagingSenderId: '648342855448',
     };
 
     private _user: User | null = null;
@@ -65,8 +66,8 @@ export class FirebaseService {
                 .firestore()
                 .collection('visitType')
                 .get()
-                .then(typeDocs => {
-                    typeDocs.forEach(typeDoc => {
+                .then((typeDocs) => {
+                    typeDocs.forEach((typeDoc) => {
                         this._visitTypes.push(typeDoc.data() as { displayText: string });
                     });
                 });
@@ -85,27 +86,33 @@ export class FirebaseService {
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then(
-                success => {
+                (success) => {
                     userSubject.next(true);
                 },
-                error => {
+                (error) => {
                     userSubject.next(false);
-                }
+                },
             );
         return userSubject;
+    }
+
+    public clearUserData(): void {
+        this.user = null;
+        this._activeVisit = undefined;
+        this._visitHistory = undefined;
     }
 
     public createUser(
         email: string,
         password: string,
-        username: { firstName: string; lastName: string }
+        username: { firstName: string; lastName: string },
     ): Observable<boolean> {
         const successSubject: Subject<boolean> = new Subject();
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(
-                success => {
+                (success) => {
                     successSubject.next(true);
                     successSubject.complete();
                     firebase
@@ -115,32 +122,34 @@ export class FirebaseService {
                             email,
                             bestScore: 0,
                             firstName: username.firstName,
-                            lastName: username.lastName
+                            lastName: username.lastName,
                         });
                     this._user = {
                         id: email,
                         email,
                         firstName: username.firstName,
                         lastName: username.lastName,
-                        bestScore: 0
+                        bestScore: 0,
                     };
                 },
-                error => {
+                (error) => {
                     successSubject.next(false);
                     successSubject.complete();
-                }
+                },
             );
         return successSubject;
     }
 
     public createVisit(visit: Visit): Observable<boolean> {
         visit.userName = `${this._user.firstName} ${this._user.lastName}`;
+        visit.goalSet = removeNonDecimalChars(visit.goalSet);
+        visit.salesTrend = removeNonDecimalChars(visit.salesTrend);
         const newVisitSubject: Subject<boolean> = new Subject();
         firebase
             .firestore()
             .collection('visits')
             .add(visit)
-            .then(newVisit => {
+            .then((newVisit) => {
                 newVisitSubject.next(true);
             });
         return newVisitSubject;
@@ -152,17 +161,17 @@ export class FirebaseService {
             .get(
                 `https://us-central1-dmit-visit-tracker.cloudfunctions.net/sendAdminBasicReportAsCSV?email=${
                     this._user.id
-                }`
+                }`,
             )
             .subscribe(
-                response => {
+                (response) => {
                     LogService.log(FirebaseService.name, response);
                     successSubject.next(true);
                 },
-                error => {
+                (error) => {
                     LogService.log(FirebaseService.name, error);
                     successSubject.next(false);
-                }
+                },
             );
         return successSubject;
     }
@@ -175,9 +184,9 @@ export class FirebaseService {
             .firestore()
             .collection('visits')
             .where('userId', '==', userId)
-            .onSnapshot(visitsSnapshot => {
+            .onSnapshot((visitsSnapshot) => {
                 const visitDoc = visitsSnapshot.docs.find(
-                    doc => doc.data().status === 'active'
+                    (doc) => doc.data().status === 'active',
                 );
                 const _activeVisit = !!visitDoc
                     ? { id: visitDoc.id, ...visitDoc.data() }
@@ -197,12 +206,12 @@ export class FirebaseService {
             .firestore()
             .collection('users')
             .orderBy('bestScore', 'desc')
-            .onSnapshot(usersSnapshot => {
+            .onSnapshot((usersSnapshot) => {
                 this._resultsBoardLastUpdated = new Date().toLocaleTimeString();
-                const resultsBoard = usersSnapshot.docs.map(userDoc => {
+                const resultsBoard = usersSnapshot.docs.map((userDoc) => {
                     return {
                         user: userDoc.data().firstName + ' ' + userDoc.data().lastName,
-                        score: userDoc.data().bestScore
+                        score: userDoc.data().bestScore,
                     };
                 });
                 resultBoardSubject.next(resultsBoard);
@@ -217,10 +226,10 @@ export class FirebaseService {
             .collection('users')
             .where('email', '==', email)
             .get()
-            .then(users => {
+            .then((users) => {
                 userSubject.next({
                     id: users.docs[0].id,
-                    ...(users.docs[0].data() as User)
+                    ...(users.docs[0].data() as User),
                 });
                 this.initVisitsListener();
             });
@@ -233,9 +242,9 @@ export class FirebaseService {
             .collection('visits')
             .where('userId', '==', this._user.id)
             .orderBy('visitDate', 'desc')
-            .onSnapshot(visits => {
+            .onSnapshot((visits) => {
                 this._visitHistory = [];
-                visits.docs.forEach(doc => {
+                visits.docs.forEach((doc) => {
                     if (
                         doc.data().status === 'complete' ||
                         doc.data().status === 'closed'
@@ -268,6 +277,9 @@ export class FirebaseService {
 
     public updateActiveVisit(visit: Visit): Observable<boolean> {
         const successSubject: Subject<boolean> = new Subject();
+        visit.dayResults = visit.dayResults.map((result) => {
+            return { date: result.date, result: removeNonDecimalChars(result.result) };
+        });
         firebase
             .firestore()
             .collection('visits')
@@ -280,7 +292,11 @@ export class FirebaseService {
                         : visit;
                 successSubject.next(true);
             })
-            .catch(error => successSubject.next(false));
+            .catch((error) => successSubject.next(false));
         return successSubject;
     }
+}
+
+function removeNonDecimalChars(value: string): string | null {
+    return typeof value === 'string' ? value.replace(/[^0-9.-]/g, '') : null;
 }

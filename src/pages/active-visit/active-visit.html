@@ -116,9 +116,8 @@
             <ion-input
                 *ngIf="!isFutureDate(dayResult)"
                 type="text"
-                (input)="standardizeInput($event)"
                 [(ngModel)]="dayResult.result"
-                placeholder="Enter today's result"
+                placeholder="Enter a new result"
             ></ion-input>
         </div>
 

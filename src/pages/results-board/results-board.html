@@ -23,7 +23,7 @@
             <p>{{ fb.readResultsBoardLastUpdated() }}</p>
         </ion-row>
     </ion-card>
-    <ion-row justify-content-center>
+    <ion-row justify-content-center *ngIf="user.admin">
         <button
             ion-button
             round

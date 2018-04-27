@@ -138,10 +138,4 @@ export class ActiveVisitPage {
             error => {}
         );
     }
-
-    public standardizeInput(event: KeyboardEvent): void {
-        (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value
-            .replace(/[^0-9.-]/g, '')
-            .replace(/(\..*)\./g, '$1');
-    }
 }
